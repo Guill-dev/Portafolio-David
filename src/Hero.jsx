@@ -1,12 +1,12 @@
 import Shires from "./Shires";
+import fotoDavid from './assets/Imagenes/perfil/DavidPortada.jpg';
+
 function Hero() {
   return (
     <section className="hero" id="top">
-      <img
-        className="hero-photo"
-        src="https://davidperezpantoja.com/images/david.jpg"
-        alt="David Pérez Pantoja con su trombón"
-      />
+      <img className="hero-photo" 
+        src={fotoDavid}
+        />  
       <Shires />
       <br />
       <h1>

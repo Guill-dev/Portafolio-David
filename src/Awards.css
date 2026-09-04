@@ -1,8 +1,39 @@
+/* --- Definición de Animaciones para Awards --- */
+
+/* Efecto 1: Pulso sutil para las tarjetas */
+@keyframes pulso-award {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(253, 229, 17, 0);
+  }
+  50% {
+    transform: scale(1.01);
+    box-shadow: 0 0 15px 6px rgba(201, 162, 76, 0.08);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(201, 162, 76, 0);
+  }
+}
+
+/* Efecto 2: Brillo Metálico/Reflejo que pasa (adaptado) */
+@keyframes brillo-metalico-award {
+  0% {
+    left: -150%;
+  }
+  100% {
+    left: 150%;
+  }
+}
+
+/* --- Estilos de Awards Grid Actualizados --- */
+
 .awards-grid {
   display: grid;
   grid-template-columns: 1fr;
   gap: 18px;
   margin-top: 8px;
+  cursor: pointer;
 }
 
 .award-card {
@@ -14,14 +45,70 @@
   border-radius: 6px;
   background: linear-gradient(160deg, rgba(201, 162, 76, 0.04), transparent 60%);
   transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  
+  /* --- NUEVO: Necesario para las animaciones --- */
+  position: relative;
+  overflow: hidden;
+  
+  /* --- APLICAR ANIMACIÓN DE PULSO --- */
+  animation: pulso-award 4s ease-in-out infinite;
 }
 
+/* --- BRILLO METÁLICO (Pseudo-elemento ::after) --- */
+.award-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 100%;
+  height: 100%;
+  
+  /* Gradiente blanco/sutil oblicuo */
+  background: linear-gradient(
+    90deg, 
+    rgba(255, 255, 255, 0) 0%, 
+    rgba(243, 239, 36, 0.478) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  
+  transform: skewX(-25deg);
+  
+  /* --- APLICAR ANIMACIÓN DE BRILLO --- */
+  animation: brillo-metalico-award 2.5s linear infinite;
+  animation-delay: 0.5s;
+  
+  /* Hacerlo más sutil que el botón */
+  pointer-events: none;
+}
+
+/* --- ESTADO HOVER (mantiene efecto pero lo pausa opcionalmente) --- */
 .award-card:hover {
   transform: translateY(-3px);
   border-color: var(--brass-dim);
-  box-shadow: 0 16px 30px -18px rgba(201, 162, 76, 0.35);
+  box-shadow: 0 16px 30px -18px rgba(186, 201, 76, 0.35);
+  
+  /* Opcional: pausar pulso y brillo al hacer hover */
+  /* animation-play-state: paused; */
+  /* .award-card:hover::after { animation-play-state: paused; } */
 }
 
+/* --- EFECTO DE PRESIONAR (:active) --- */
+.award-card:active {
+  transform: translateY(1px) scale(0.98);
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.2);
+  border-color: rgba(201, 162, 76, 0.4);
+  background: rgba(201, 162, 76, 0.06);
+  
+  /* Pausar animaciones mientras se presiona */
+  animation-play-state: paused;
+}
+
+/* Asegurar que el pseudo-elemento también se pause */
+.award-card:active::after {
+  animation-play-state: paused;
+}
+
+/* --- Estilos existentes (sin cambios) --- */
 .award-medal {
   position: relative;
   flex-shrink: 0;
@@ -73,6 +160,7 @@
   font-style: italic;
 }
 
+/* --- Media Queries (sin cambios) --- */
 @media (min-width: 620px) {
   .awards-grid {
     grid-template-columns: 1fr 1fr;

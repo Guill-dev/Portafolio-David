@@ -4,9 +4,11 @@ import { SOCIALS } from './socialLinks';
 
 const NAV_ITEMS = [
   { id: 'historia', label: 'Historia' },
-  { id: 'eventos', label: 'Eventos' },
   { id: 'presentaciones', label: 'Presentaciones' },
+  { id: 'premios', label: 'Reconocimientos' },
+  { id: 'eventos', label: 'Eventos' },
   { id: 'contacto', label: 'Contacto' }
+
 ];
 
 
