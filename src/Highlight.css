@@ -1,0 +1,9 @@
+.highlight {
+  transition: color 0.25s ease;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.highlight:hover {
+  color: var(--brass);
+}

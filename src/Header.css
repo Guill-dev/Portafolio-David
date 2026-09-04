@@ -1,0 +1,139 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(10, 11, 13, 0.72);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--hairline);
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+}
+
+.brand {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
+.brand span {
+  color: var(--brass);
+}
+
+.navtoggle {
+  background: none;
+  border: none;
+  color: var(--ivory);
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+/* En celular: menú oculto, se despliega hacia abajo */
+.navlinks {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: var(--bg);
+  border-bottom: 1px solid var(--hairline);
+  list-style: none;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease;
+}
+
+.navlinks.open {
+  max-height: 320px;
+}
+
+.navlinks li {
+  padding: 16px 20px;
+  border-top: 1px solid var(--hairline);
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+/* En celular: menú oculto, se despliega hacia abajo */
+
+/* A partir de 760px (tablet/escritorio): menú horizontal siempre visible */
+@media (min-width: 760px) {
+  .nav {
+    padding: 18px 32px;
+    max-width: 1160px;
+    margin: 0 auto;
+  }
+
+  .navtoggle {
+    display: none;
+  }
+
+  .navlinks {
+    position: static;
+    max-height: none;
+    overflow: visible;
+    display: flex;
+    gap: 32px;
+    background: none;
+    border: none;
+  }
+
+  .navlinks li {
+    padding: 0;
+    border: none;
+  }
+}
+
+.navlinks a {
+  color: var(--muted);
+  transition: color 0.25s ease;
+}
+
+.navlinks a:hover {
+  color: var(--brass);
+}
+
+
+/*para los botones de redes sociales*/
+.brand-group {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.header-socials {
+  display: flex;
+  gap: 8px;
+}
+
+.header-socials a {
+  color: var(--muted);
+  transition: color 0.25s ease;
+}
+
+.header-socials a:hover {
+  color: var(--brass);
+}
+
+.header-socials svg {
+  width: 14px;
+  height: 14px;
+  fill: currentColor;
+}
+
+@media (min-width: 480px) {
+  .header-socials {
+    gap: 10px;
+  }
+
+  .header-socials svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+/*para los botones de redes sociales*/

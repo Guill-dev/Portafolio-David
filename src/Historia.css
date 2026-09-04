@@ -1,0 +1,23 @@
+/* Estilos para el botón de "Seguir leyendo" */
+.btn-leer-mas {
+  background: none;
+  border: none;
+  color: var(--muted);
+  cursor: pointer;
+  padding: 10px 0;
+  font-size: 1rem;
+  display: block;
+  margin-top: 15px;
+  transition: color 0.2s ease-in-out;
+}
+
+/* Efecto al pasar el cursor sobre el botón */
+.btn-leer-mas:hover {
+  color: rgba(252, 203, 97, 0.69); /* Un dorado un poco más oscuro */
+
+}
+
+/* Espaciado del texto cuando se despliega */
+.texto-oculto {
+  margin-top: 16px;
+}

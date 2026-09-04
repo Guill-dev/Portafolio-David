@@ -1,0 +1,57 @@
+.movement {
+  padding: 70px 20px 30px;
+  border-top: 1px solid var(--hairline);
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.movement-head {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+  
+}
+
+.movement-num {
+  font-family: var(--display);
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--brass-dim);
+}
+
+.movement-head h2 {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: 1.6rem;
+  
+  
+}
+
+.movement-body {
+  font-size: 0.98rem;
+  
+}
+
+.movement-body p + p {
+  margin-top: 14px;
+}
+
+@media (min-width: 760px) {
+  .movement {
+    padding: 120px 32px 40px;
+  }
+
+  .movement-head h2 {
+    font-size: clamp(1.8rem, 4vw, 2.7rem);
+  }
+
+  .movement-body {
+    font-size: 1.05rem;
+  }
+}
+.movement-body p {
+  text-align: justify;
+  hyphens: auto;
+}
