@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { VIDEOS } from './videos';
 import Movement from './Movement';

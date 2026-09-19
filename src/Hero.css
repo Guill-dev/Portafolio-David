@@ -109,10 +109,12 @@
   font-family: var(--display);
   font-style: italic;
   display: flex;
-  flex-direction: column;
-  gap: 12px;
-  max-width: 280px;
-  margin: 1.5rem auto; /* Ajuste para separar del hero-photo */
+  flex-direction: row;
+  gap:15px; /*DISTANCIA DE BOTONS DE SHIRES Y SINFONICA DE COLLOMBIA*/
+  max-width: 600PX;
+  margin: 0.2rem auto; /* Ajuste para separar del hero-photo */
+  height: 70px
+
 }
 
 .shires-row a {
@@ -175,7 +177,7 @@
   background: linear-gradient(
     90deg, 
     rgba(255, 255, 255, 0) 0%, 
-    rgb(255, 183, 29) 50%, /* El centro del brillo */
+    rgba(255, 183, 29, 0.759) 50%, /* El centro del brillo */
     rgba(255, 255, 255, 0) 100%
   );
   
