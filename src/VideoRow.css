@@ -1,22 +1,4 @@
 
-.video-row {
-  display: flex;
-  gap: 24px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  padding: 16px 0 20px;
-  margin-top: 24px;
-  scrollbar-width: thin;
-  scrollbar-color: var(--brass-dim) transparent;
-  cursor: pointer;
-}
-
-.video-card {
-  flex: 0 0 100%;
-  width: 100%;
-  scroll-snap-align: start;
-}
-
 .video-frame {
   position: relative;
   width: 100%;
@@ -24,6 +6,111 @@
   border-radius: 4px;
   overflow: hidden;
   background: #000;
+  margin-top: 24px;
+}
+
+.video-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.video-layer.saliente {
+  z-index: 2;
+}
+
+@keyframes videoSaleIzquierda {
+  from { transform: translateX(0); opacity: 1; }
+  to { transform: translateX(-100%); opacity: 0.1; }
+}
+
+@keyframes videoSaleDerecha {
+  from { transform: translateX(0); opacity: 1; }
+  to { transform: translateX(100%); opacity: 0.1; }
+}
+
+@keyframes videoEntraDerecha {
+  from { transform: translateX(100%); opacity: 0.3; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes videoEntraIzquierda {
+  from { transform: translateX(-100%); opacity: 0.3; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+.video-layer.saliente.siguiente {
+  animation: videoSaleIzquierda 0.5s ease forwards;
+}
+
+.video-layer.saliente.anterior {
+  animation: videoSaleDerecha 0.5s ease forwards;
+}
+
+.video-layer.entrante.siguiente {
+  animation: videoEntraDerecha 0.5s ease forwards;
+}
+
+.video-layer.entrante.anterior {
+  animation: videoEntraIzquierda 0.5s ease forwards;
+}
+
+.video-nav-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(10, 11, 13, 0.55);
+  border: 1px solid var(--hairline);
+  color: var(--ivory);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.25s ease, border-color 0.25s ease;
+  z-index: 5;
+}
+
+.video-nav-arrow:hover {
+  background: rgba(201, 162, 76, 0.15);
+  border-color: var(--brass);
+}
+
+.video-nav-arrow.left {
+  left: 10px;
+}
+
+.video-nav-arrow.right {
+  right: 10px;
+}
+
+.video-dots {
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  z-index: 5;
+}
+
+.video-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(241, 236, 224, 0.4);
+  cursor: pointer;
+  transition: background 0.25s ease;
+}
+
+.video-dot.active {
+  background: var(--brass);
 }
 
 .video-frame iframe {
@@ -81,18 +168,4 @@
   color: var(--muted);
   font-size: 0.85rem;
   margin-top: 4px;
-}
-
-/* En pantallas pequeñas */
-@media (max-width: 759px) {
-  .video-card {
-    flex: 0 0 100%;
-  }
-}
-
-/* En escritorio */
-@media (min-width: 760px) {
-  .video-card {
-    flex: 0 0 100%;
-  }
 }

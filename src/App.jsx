@@ -1,3 +1,5 @@
+import LoadingScreen from './LoadingScreen';
+import AmbientBackground from './AmbientBackground';
 import Header from './Header';
 import './Header.css';
 import Hero from './Hero';
@@ -17,6 +19,8 @@ import './Awards.css'
 function App() {
   return (
     <div>
+      <LoadingScreen />
+      <AmbientBackground />
       <Header />
       <Hero />  
       <Historia />

@@ -1,0 +1,197 @@
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: var(--bg);
+  background-image: radial-gradient(
+    ellipse 70% 55% at 50% 50%,
+    rgba(201, 162, 76, 0.10),
+    transparent 65%
+  );
+  transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+
+.loader-saliendo {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.loader-escena {
+  width: min(400px, 86vw);
+  text-align: center;
+}
+
+/* --- Pentagrama --- */
+.loader-pentagrama {
+  position: relative;
+  height: 45px;
+  margin-bottom: 34px;
+}
+
+.loader-linea {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: rgba(201, 162, 76, 0.4);
+  transform: scaleX(0);
+  animation: loader-linea 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes loader-linea {
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.loader-clave {
+  position: absolute;
+  left: 6%;
+  top: 50%;
+  font-family: 'Segoe UI Symbol', Georgia, serif;
+  font-size: 58px;
+  line-height: 1;
+  color: var(--brass);
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.6);
+  animation: loader-clave 1s cubic-bezier(0.22, 1, 0.36, 1) 0.45s forwards;
+}
+
+@keyframes loader-clave {
+  to {
+    opacity: 0.95;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+.loader-nota {
+  position: absolute;
+  font-family: 'Segoe UI Symbol', Georgia, serif;
+  font-size: 19px;
+  line-height: 1;
+  color: var(--ivory);
+  opacity: 0;
+  transform: translate(-50%, -50%) translateY(12px);
+  animation: loader-nota 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: calc(0.9s + var(--i) * 0.22s);
+}
+
+@keyframes loader-nota {
+  to {
+    opacity: 0.9;
+    transform: translate(-50%, -50%) translateY(0);
+  }
+}
+
+/* --- Nombre y oficio --- */
+.loader-marca {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: 1.45rem;
+  color: var(--ivory);
+  opacity: 0;
+  animation: loader-marca 1.2s ease 1.9s forwards;
+}
+
+.loader-marca span {
+  color: var(--brass);
+}
+
+@keyframes loader-marca {
+  from {
+    opacity: 0;
+    letter-spacing: 0.24em;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    letter-spacing: 0.02em;
+    transform: translateY(0);
+  }
+}
+
+.loader-oficio {
+  margin-top: 10px;
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  opacity: 0;
+  animation: loader-oficio 0.9s ease 2.4s forwards;
+}
+
+@keyframes loader-oficio {
+  to {
+    opacity: 1;
+  }
+}
+
+/* --- Barra de progreso --- */
+.loader-barra {
+  width: 130px;
+  height: 1px;
+  margin: 30px auto 0;
+  background: rgba(241, 236, 224, 0.10);
+}
+
+.loader-barra span {
+  display: block;
+  height: 100%;
+  background: var(--brass);
+  opacity: 0.7;
+  transform: scaleX(0);
+  transform-origin: left;
+  animation: loader-barra 3.4s cubic-bezier(0.45, 0, 0.25, 1) forwards;
+}
+
+@keyframes loader-barra {
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@media (min-width: 760px) {
+  .loader-marca {
+    font-size: 1.8rem;
+  }
+
+  .loader-clave {
+    font-size: 66px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loader-linea {
+    animation: none;
+    transform: scaleX(1);
+  }
+
+  .loader-clave {
+    animation: none;
+    opacity: 0.95;
+    transform: translate(-50%, -50%);
+  }
+
+  .loader-nota {
+    animation: none;
+    opacity: 0.9;
+    transform: translate(-50%, -50%);
+  }
+
+  .loader-marca,
+  .loader-oficio {
+    animation: none;
+    opacity: 1;
+    transform: none;
+    letter-spacing: 0.02em;
+  }
+
+  .loader-barra span {
+    animation: none;
+    transform: scaleX(1);
+  }
+}

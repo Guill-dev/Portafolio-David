@@ -61,6 +61,12 @@
 }
 /* En celular: menú oculto, se despliega hacia abajo */
 
+/* Desplegable "Más": oculto en celular, ahí Rutinas va como ítem normal */
+.nav-more {
+  position: relative;
+  display: none;
+}
+
 /* A partir de 760px (tablet/escritorio): menú horizontal siempre visible */
 @media (min-width: 760px) {
   .nav {
@@ -87,6 +93,16 @@
     padding: 0;
     border: none;
   }
+
+  /* En escritorio, Rutinas vive dentro del desplegable "Más", no como ítem plano */
+  .nav-item-mobile-only {
+    display: none;
+  }
+
+  .nav-more {
+    display: flex;
+    align-items: center;
+  }
 }
 
 .navlinks a {
@@ -96,6 +112,84 @@
 
 .navlinks a:hover {
   color: var(--brass);
+}
+
+/* Desplegable "Más": agrupa enlaces extra en escritorio para no amontonar el menú */
+.nav-more-trigger {
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--muted);
+  font-family: inherit;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: color 0.25s ease;
+}
+
+.nav-more:hover .nav-more-trigger,
+.nav-more-trigger[aria-expanded="true"] {
+  color: var(--brass);
+}
+
+.nav-more-arrow {
+  font-size: 0.65rem;
+  transition: transform 0.25s ease;
+}
+
+.nav-more:hover .nav-more-arrow,
+.nav-more-trigger[aria-expanded="true"] .nav-more-arrow {
+  transform: rotate(180deg);
+}
+
+.nav-more-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 18px;
+  min-width: 160px;
+  background: var(--bg);
+  border: 1px solid var(--hairline);
+  border-radius: 4px;
+  list-style: none;
+  padding: 6px 0;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px);
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.35);
+  z-index: 20;
+}
+
+.nav-more:hover .nav-more-dropdown,
+.nav-more-dropdown.open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.nav-more-dropdown li {
+  padding: 0;
+  border: none;
+}
+
+.nav-more-dropdown a {
+  display: block;
+  padding: 10px 16px;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.nav-more-dropdown a:hover {
+  color: var(--brass);
+  background: rgba(201, 162, 76, 0.08);
 }
 
 

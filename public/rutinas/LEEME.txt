@@ -1,0 +1,8 @@
+Coloca aquí los archivos PDF de cada rutina (por ejemplo: rutina-1.pdf).
+
+Luego, en src/rutinas.js agrega un bloque con:
+  - numero: el número de la rutina
+  - titulo: el título
+  - descripcion: qué contempla la rutina
+  - pdf: '/rutinas/nombre-del-archivo.pdf'
+  - videoId: el ID del video de YouTube (o '' si todavía no hay video)
