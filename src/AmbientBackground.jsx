@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import './AmbientBackground.css';
 
-const SIMBOLOS = ['♪', '♫', '♩', '♬', '𝄞', '𝄡', '𝄢', '𝄫', '♮', '♭', '♯'];
+const SIMBOLOS = ['♪', '♫', '♬', '𝄞', '𝄡', '𝄢', '𝄫', '♮', '♭', '♯'];
 
 function aleatorioEntre(min, max) {
   return min + Math.random() * (max - min);
