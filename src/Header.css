@@ -114,6 +114,37 @@
   color: var(--brass);
 }
 
+/* Subrayado animado al pasar el mouse por cada enlace del menú principal */
+.navlinks > li > a,
+.nav-more-trigger {
+  position: relative;
+}
+
+.navlinks > li > a::after,
+.nav-more-trigger::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -6px;
+  height: 1px;
+  background: var(--brass);
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.navlinks > li > a:hover::after,
+.navlinks > li > a:focus-visible::after {
+  transform: scaleX(1);
+}
+
+.nav-more:hover .nav-more-trigger::after,
+.nav-more-trigger[aria-expanded="true"]::after,
+.nav-more-trigger:focus-visible::after {
+  transform: scaleX(1);
+}
+
 /* Desplegable "Más": agrupa enlaces extra en escritorio para no amontonar el menú */
 .nav-more-trigger {
   background: none;
