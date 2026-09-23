@@ -1,6 +1,33 @@
 export const VIDEOS = [
+
   {
-    id: 'PXkibZee4gg', // reemplaza por el ID real del video de YouTube
+    id: 'bUml0PTV-tQ',
+    titulo: 'CONCERTO FOR BASS TROMBONE & ORCHESTRA',
+    autor: 'Ian McDougall',
+  }, 
+  {
+    id: 'n2PyYwJaBHs',
+    titulo: 'EL TROMBON DE STEPHANE - CONCERTINO PARA TROMBON BAJO',
+    autor: 'CRISTIAN VALLEJO',
+  },  
+  {
+    id: 'e3qR6OQX7YE',
+    titulo: 'CONCERTO FOR BASS TROMBONE AND ORCHESTRA',
+    autor: 'CHRIS BRUBECK',
+  },  
+
+  {
+    id: '5Yyh0cuwKIU',
+    titulo: 'CONCERTO FOR BASS TROMBONE AND WIND BAND',
+    autor: 'DERECK BOURGEOIS',
+  },
+  {
+    id: 'lZeS4IVhTlI',
+    titulo: 'THREE TANGOS - BASS TROMBONE AND PIANO',
+    autor: 'ARR. Niklas Sivelöv and Øystein Baadsvik',
+  },
+  {
+    id: 'PXkibZee4gg',
     titulo: 'WORLD CONCERTO FOR BASS TROMBONE AND BAND',
     autor: 'STEVEN VERHELST ',
   },
