@@ -1,20 +1,54 @@
-/* Estilos para el botón de "Seguir leyendo" */
+/* Panel de contraste para que el texto de la Historia no quede "suelto"
+   sobre el fondo animado */
+.movement-historia .movement-body {
+  padding: 28px 22px;
+  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(241, 236, 224, 0.055), rgba(201, 162, 76, 0.02));
+  border: 1px solid rgba(241, 236, 224, 0.08);
+  box-shadow: 0 24px 50px -32px rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(3px);
+}
+
+@media (min-width: 760px) {
+  .movement-historia .movement-body {
+    padding: 44px 52px;
+  }
+}
+
+/* Botón de "Seguir leyendo" */
 .btn-leer-mas {
-  background: none;
-  border: none;
+  display: flex;
+  width: fit-content;
+  align-items: center;
+  gap: 8px;
+  margin: 22px auto 0;
+  padding: 10px 22px;
+  border: 1px solid var(--hairline);
+  border-radius: 999px;
+  background: rgba(201, 162, 76, 0.05);
   color: var(--muted);
+  font-family: var(--display);
+  font-style: italic;
+  font-size: 0.88rem;
   cursor: pointer;
-  padding: 10px 0;
-  font-size: 1rem;
-  display: block;
-  margin-top: 15px;
-  transition: color 0.2s ease-in-out;
+  transition: border-color 0.25s ease, color 0.25s ease, background 0.25s ease;
 }
 
 /* Efecto al pasar el cursor sobre el botón */
 .btn-leer-mas:hover {
-  color: rgba(252, 203, 97, 0.69); /* Un dorado un poco más oscuro */
+  border-color: var(--brass);
+  color: var(--brass);
+  background: rgba(201, 162, 76, 0.1);
+}
 
+.btn-leer-mas-icono {
+  display: inline-block;
+  font-size: 0.7rem;
+  transition: transform 0.3s ease;
+}
+
+.btn-leer-mas[aria-expanded="true"] .btn-leer-mas-icono {
+  transform: rotate(180deg);
 }
 
 /* Espaciado del texto cuando se despliega */

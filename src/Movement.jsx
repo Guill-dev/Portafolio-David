@@ -1,8 +1,8 @@
 import './Movement.css';
 
-function Movement({ numeral, title, id, children }) {
+function Movement({ numeral, title, id, className, children }) {
   return (
-    <section className="movement" id={id}>
+    <section className={`movement ${className || ''}`} id={id}>
       <div className="movement-head">
         <span className="movement-num">{numeral}</span>
         <h2>{title}</h2>

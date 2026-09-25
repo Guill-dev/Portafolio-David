@@ -12,7 +12,7 @@ const NOTAS = [
   { simbolo: '♪', izquierda: 86, arriba: 50 },
 ];
 
-function LoadingScreen() {
+function LoadingScreen({ onFinish }) {
   const [saliendo, setSaliendo] = useState(false);
   const [terminado, setTerminado] = useState(false);
 
@@ -26,6 +26,7 @@ function LoadingScreen() {
     const fin = setTimeout(() => {
       setTerminado(true);
       document.body.style.overflow = '';
+      onFinish?.();
     }, duracion + 600);
 
     return () => {
@@ -33,7 +34,7 @@ function LoadingScreen() {
       clearTimeout(fin);
       document.body.style.overflow = '';
     };
-  }, []);
+  }, [onFinish]);
 
   if (terminado) return null;
 
@@ -68,9 +69,10 @@ function LoadingScreen() {
         </p>
         <p className="loader-oficio">Trombonista Colombiano</p>
 
-        <div className="loader-barra">
-          <span />
-        </div>
+        <svg className="loader-progreso" viewBox="0 0 60 60" aria-hidden="true">
+          <circle className="loader-progreso-fondo" cx="30" cy="30" r="27" />
+          <circle className="loader-progreso-relleno" cx="30" cy="30" r="27" />
+        </svg>
       </div>
     </div>
   );

@@ -8,7 +8,7 @@ function Historia() {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <Movement numeral="Movimiento I" title="Historia" id="historia">
+    <Movement numeral="Movimiento I" title="Historia" id="historia" className="movement-historia">
       {/* Párrafo 1: Se muestra siempre */}
       <p>
         Stiven David Pérez Pantoja, trombón bajo, es un destacado músico nariñense, oriundo de{' '}
@@ -96,11 +96,13 @@ function Historia() {
       )}
 
       {/* Botón con clase CSS */}
-      <button 
+      <button
         onClick={() => setIsExpanded(!isExpanded)}
         className="btn-leer-mas"
+        aria-expanded={isExpanded}
       >
-        {isExpanded ? '... Ver menos ▲' : '... Seguir leyendo ▼'}
+        <span>{isExpanded ? 'Ver menos' : 'Seguir leyendo'}</span>
+        <span className="btn-leer-mas-icono" aria-hidden="true">▾</span>
       </button>
 
     </Movement>

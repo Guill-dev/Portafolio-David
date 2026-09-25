@@ -10,7 +10,7 @@ function Shires() {
       </a>
 
       <a 
-        href="https://www.seshires.com/artiste/mvlhx95b2al4m3obepyfzq59yhj0yn" 
+        href="https://sinfonica.com.co/wp-content/uploads/2026/09/StivenDavidPerezPantoja.jpg" 
         target="_blank" 
         rel="noopener noreferrer"
         >

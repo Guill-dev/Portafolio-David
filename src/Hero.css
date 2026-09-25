@@ -9,14 +9,20 @@
   background: radial-gradient(ellipse 80% 60% at 50% 20%, rgba(201, 162, 76, 0.10), transparent 60%);
 }
 
+.hero-photo-wrap {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 28px;
+}
+
 .hero-photo {
+  display: block;
   width: 140px;
   height: 140px;
   border-radius: 50%;
   object-fit: cover;
   border: 1px solid rgba(201, 162, 76, 0.35);
   box-shadow: 0 0 0 8px rgba(201, 162, 76, 0.04), 0 20px 40px -15px rgba(0, 0, 0, 0.7);
-  margin-bottom: 28px;
 }
 
 .eyebrow {
@@ -44,33 +50,91 @@
 }
 
 .scroll-cue {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   margin-top: 36px;
   font-size: 0.65rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--muted);
+  animation: scroll-cue-flotar 2.2s ease-in-out infinite, scroll-cue-brillo 2.2s ease-in-out infinite;
 }
 
-/* Pantallas más grandes: todo crece */
+.scroll-cue-icono {
+  display: inline-block;
+  animation: scroll-cue-rebote 2.2s ease-in-out infinite;
+}
+
+@keyframes scroll-cue-flotar {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(4px);
+  }
+}
+
+@keyframes scroll-cue-brillo {
+  0%,
+  100% {
+    color: var(--muted);
+    letter-spacing: 0.16em;
+  }
+  50% {
+    color: var(--brass);
+    letter-spacing: 0.22em;
+  }
+}
+
+@keyframes scroll-cue-rebote {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translateY(8px);
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-cue,
+  .scroll-cue-icono {
+    animation: none;
+  }
+}
+
+/* Pantallas más grandes: todo crece, pero compacto para que el aviso de
+   scroll quede visible sin tener que bajar */
 @media (min-width: 760px) {
   .hero {
-    min-height: 92svh;
-    padding: 100px 24px 80px;
+    min-height: 86svh;
+    padding: 64px 24px 36px;
+  }
+
+  .hero-photo-wrap {
+    margin-bottom: 26px;
   }
 
   .hero-photo {
-    width: 210px;
-    height: 210px;
-    margin-bottom: 40px;
+    width: 170px;
+    height: 170px;
   }
 
   .hero h1 {
-    font-size: clamp(3rem, 7vw, 5.2rem);
+    font-size: clamp(2.6rem, 6vw, 4.4rem);
   }
 
   .hero p.tag {
     max-width: 480px;
     font-size: 1.02rem;
+  }
+
+  .scroll-cue {
+    margin-top: 24px;
   }
 }
 /* Botones "Mira a este artista" (S.E. Shires / OSNC) */

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import LoadingScreen from './LoadingScreen';
 import AmbientBackground from './AmbientBackground';
 import Header from './Header';
@@ -17,12 +18,23 @@ import './Awards.css'
 
 
 function App() {
+  const [cargaLista, setCargaLista] = useState(false);
+
+  function alTerminarCarga() {
+    const hash = window.location.hash;
+    if (hash) {
+      const destino = document.querySelector(hash);
+      if (destino) destino.scrollIntoView();
+    }
+    setCargaLista(true);
+  }
+
   return (
     <div>
-      <LoadingScreen />
+      <LoadingScreen onFinish={alTerminarCarga} />
       <AmbientBackground />
       <Header />
-      <Hero />  
+      <Hero cargaLista={cargaLista} />
       <Historia />
       <VideoRow />
       <Awards/>
