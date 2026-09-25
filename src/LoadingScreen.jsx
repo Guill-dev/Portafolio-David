@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useEffectEvent, useState } from 'react';
 import './LoadingScreen.css';
 
 const LINEAS = [0, 1, 2, 3, 4];
@@ -16,6 +16,10 @@ function LoadingScreen({ onFinish }) {
   const [saliendo, setSaliendo] = useState(false);
   const [terminado, setTerminado] = useState(false);
 
+  // Si onFinish cambiara entre renders, el efecto no debe reiniciarse:
+  // eso volvería a bloquear el scroll otros 4 segundos.
+  const avisarFin = useEffectEvent(() => onFinish?.());
+
   useEffect(() => {
     const prefiereReducido = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const duracion = prefiereReducido ? 800 : 3400;
@@ -26,7 +30,7 @@ function LoadingScreen({ onFinish }) {
     const fin = setTimeout(() => {
       setTerminado(true);
       document.body.style.overflow = '';
-      onFinish?.();
+      avisarFin();
     }, duracion + 600);
 
     return () => {
@@ -34,7 +38,7 @@ function LoadingScreen({ onFinish }) {
       clearTimeout(fin);
       document.body.style.overflow = '';
     };
-  }, [onFinish]);
+  }, []);
 
   if (terminado) return null;
 

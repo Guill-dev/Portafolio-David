@@ -1,16 +1,12 @@
 import Shires from "./Shires";
-import Mascota from "./Mascota";
 import fotoDavid from './assets/Imagenes/perfil/DavidPortada.jpg';
 
-function Hero({ cargaLista }) {
+function Hero() {
   return (
     <section className="hero" id="top">
-      <div className="hero-photo-wrap">
-        <img className="hero-photo"
-          src={fotoDavid}
-          />
-        <Mascota activo={cargaLista} />
-      </div>
+      <img className="hero-photo"
+        src={fotoDavid}
+        />
       <Shires />
       <br />
       <h1>
