@@ -32,6 +32,8 @@ function ImageCarousel({ items, autoplayMs = 5000 }) {
     inicioX.current = null;
   }
 
+  const numero = (n) => String(n).padStart(2, '0');
+
   return (
     <>
       <div
@@ -39,38 +41,47 @@ function ImageCarousel({ items, autoplayMs = 5000 }) {
         onTouchStart={manejarInicioToque}
         onTouchEnd={manejarFinToque}
       >
-        <button className="carousel-arrow left" aria-label="Anterior" onClick={() => irA(indice - 1)}>
-          ‹
-        </button>
-
-        {/* 🌟 NUEVO CONTENEDOR: Se desplaza según el índice actual */}
-        <div 
-          className="carousel-track" 
+        {/* Se desplaza según el índice actual */}
+        <div
+          className="carousel-track"
           style={{ transform: `translateX(-${indice * 100}%)` }}
         >
           {items.map((item, i) => (
-            <img key={i} src={item.src} alt={item.caption} />
-          ))}
-        </div>
-
-        <button className="carousel-arrow right" aria-label="Siguiente" onClick={() => irA(indice + 1)}>
-          ›
-        </button>
-
-        <div className="carousel-dots">
-          {items.map((_, i) => (
-            <button
-              key={i}
-              className={`dot ${i === indice ? 'active' : ''}`}
-              aria-label={`Ver imagen ${i + 1}`}
-              onClick={() => irA(i)}
-            />
+            <div key={i} className="carousel-slide">
+              {/* Copia desenfocada del afiche que rellena los lados */}
+              <img className="carousel-fondo" src={item.src} alt="" aria-hidden="true" />
+              <img className="carousel-img" src={item.src} alt={item.caption || ''} />
+            </div>
           ))}
         </div>
       </div>
 
-      {/* Mostramos la descripción de la imagen activa */}
-      <p className="carousel-caption">{items[indice]?.caption}</p>
+      <div className="carousel-info">
+        <p className="carousel-caption">{items[indice]?.caption}</p>
+
+        <div className="carousel-controles">
+          <span className="carousel-contador">
+            {numero(indice + 1)} <span>/ {numero(items.length)}</span>
+          </span>
+          <button className="carousel-arrow" aria-label="Anterior" onClick={() => irA(indice - 1)}>
+            ←
+          </button>
+          <button className="carousel-arrow" aria-label="Siguiente" onClick={() => irA(indice + 1)}>
+            →
+          </button>
+        </div>
+      </div>
+
+      <div className="carousel-dots">
+        {items.map((_, i) => (
+          <button
+            key={i}
+            className={`dot ${i === indice ? 'active' : ''}`}
+            aria-label={`Ver imagen ${i + 1}`}
+            onClick={() => irA(i)}
+          />
+        ))}
+      </div>
     </>
   );
 }

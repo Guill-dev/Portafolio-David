@@ -2,8 +2,9 @@
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgba(10, 11, 13, 0.72);
-  backdrop-filter: blur(10px);
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   border-bottom: 1px solid var(--hairline);
 }
 
@@ -11,13 +12,18 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 20px;
+  gap: 16px;
+  height: var(--header-h);
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
 }
 
 .brand {
   font-family: var(--display);
-  font-weight: 500;
-  font-size: 0.85rem;
+  font-weight: 600;
+  font-size: 0.92rem;
+  letter-spacing: -0.02em;
   white-space: nowrap;
 }
 
@@ -25,41 +31,107 @@
   color: var(--brass);
 }
 
+/* ---------- Botón de menú (celular y tablet): dos líneas que forman una X ---------- */
 .navtoggle {
+  position: relative;
+  flex-shrink: 0;
+  width: 42px;
+  height: 42px;
+  border: 1px solid var(--hairline);
+  border-radius: 50%;
   background: none;
-  border: none;
-  color: var(--ivory);
-  font-size: 1.5rem;
   cursor: pointer;
 }
 
-/* En celular: menú oculto, se despliega hacia abajo */
+.navtoggle-linea {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  height: 1.5px;
+  border-radius: 2px;
+  background: var(--ivory);
+  transition: transform 0.35s var(--ease), top 0.35s var(--ease);
+}
+
+.navtoggle-linea:first-child {
+  top: 16px;
+}
+
+.navtoggle-linea:last-child {
+  top: 24px;
+}
+
+.navtoggle[aria-expanded="true"] .navtoggle-linea:first-child {
+  top: 20px;
+  transform: rotate(45deg);
+}
+
+.navtoggle[aria-expanded="true"] .navtoggle-linea:last-child {
+  top: 20px;
+  transform: rotate(-45deg);
+}
+
+/* ---------- Menú en celular y tablet: pantalla completa con enlaces grandes ---------- */
 .navlinks {
   position: absolute;
   top: 100%;
   left: 0;
   right: 0;
+  height: calc(100dvh - var(--header-h));
+  display: flex;
+  flex-direction: column;
+  padding: 24px var(--gutter) 40px;
   background: var(--bg);
-  border-bottom: 1px solid var(--hairline);
   list-style: none;
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.35s ease;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-12px);
+  transition: opacity 0.35s ease, transform 0.45s var(--ease), visibility 0.35s ease;
 }
 
 .navlinks.open {
-  max-height: 320px;
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
 }
 
 .navlinks li {
-  padding: 16px 20px;
-  border-top: 1px solid var(--hairline);
-  font-size: 0.85rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--muted);
+  border-bottom: 1px solid var(--hairline);
 }
-/* En celular: menú oculto, se despliega hacia abajo */
+
+.navlinks li a {
+  display: block;
+  padding: 16px 0;
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(1.8rem, 7vw, 2.6rem);
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+  color: var(--ivory);
+}
+
+.navlinks.open li {
+  animation: menu-item-entra 0.6s var(--ease) both;
+}
+
+.navlinks.open li:nth-child(2) { animation-delay: 0.04s; }
+.navlinks.open li:nth-child(3) { animation-delay: 0.08s; }
+.navlinks.open li:nth-child(4) { animation-delay: 0.12s; }
+.navlinks.open li:nth-child(5) { animation-delay: 0.16s; }
+.navlinks.open li:nth-child(6) { animation-delay: 0.2s; }
+
+@keyframes menu-item-entra {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
 /* Desplegable "Más": oculto en celular, ahí Rutinas va como ítem normal */
 .nav-more {
@@ -67,31 +139,50 @@
   display: none;
 }
 
-/* A partir de 760px (tablet/escritorio): menú horizontal siempre visible */
-@media (min-width: 760px) {
-  .nav {
-    padding: 18px 32px;
-    max-width: 1160px;
-    margin: 0 auto;
-  }
+.navlinks a {
+  transition: color 0.25s ease;
+}
 
+.navlinks a:hover {
+  color: var(--brass);
+}
+
+/* ---------- Escritorio: menú horizontal siempre visible ---------- */
+@media (min-width: 1024px) {
   .navtoggle {
     display: none;
   }
 
   .navlinks {
     position: static;
-    max-height: none;
-    overflow: visible;
-    display: flex;
-    gap: 32px;
+    height: auto;
+    flex-direction: row;
+    align-items: center;
+    gap: 24px;
+    padding: 0;
     background: none;
-    border: none;
+    overflow: visible;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    transition: none;
   }
 
   .navlinks li {
-    padding: 0;
     border: none;
+  }
+
+  .navlinks li a {
+    padding: 0;
+    font-family: var(--body);
+    font-size: 0.86rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: rgba(245, 243, 238, 0.78);
+  }
+
+  .navlinks > li > a:hover {
+    color: var(--ivory);
   }
 
   /* En escritorio, Rutinas vive dentro del desplegable "Más", no como ítem plano */
@@ -103,15 +194,35 @@
     display: flex;
     align-items: center;
   }
+
+  /* Contacto como botón tipo píldora, siempre al final */
+  .nav-item-cta {
+    order: 1;
+  }
+
+  .navlinks .nav-item-cta a {
+    padding: 9px 18px;
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    border-radius: 999px;
+    color: var(--ivory);
+    transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  }
+
+  .navlinks .nav-item-cta a:hover {
+    background: var(--ivory);
+    border-color: var(--ivory);
+    color: #000;
+  }
+
+  .navlinks .nav-item-cta a::after {
+    display: none;
+  }
 }
 
-.navlinks a {
-  color: var(--muted);
-  transition: color 0.25s ease;
-}
-
-.navlinks a:hover {
-  color: var(--brass);
+@media (min-width: 1280px) {
+  .navlinks {
+    gap: 32px;
+  }
 }
 
 /* Subrayado animado al pasar el mouse por cada enlace del menú principal */
@@ -120,41 +231,43 @@
   position: relative;
 }
 
-.navlinks > li > a::after,
-.nav-more-trigger::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -6px;
-  height: 1px;
-  background: var(--brass);
-  transform: scaleX(0);
-  transform-origin: center;
-  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+@media (min-width: 1024px) {
+  .navlinks > li > a::after,
+  .nav-more-trigger::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -6px;
+    height: 1px;
+    background: var(--brass);
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 0.3s var(--ease);
+  }
+
+  .navlinks > li > a:hover::after,
+  .navlinks > li > a:focus-visible::after {
+    transform: scaleX(1);
+  }
+
+  .nav-more:hover .nav-more-trigger::after,
+  .nav-more-trigger[aria-expanded="true"]::after,
+  .nav-more-trigger:focus-visible::after {
+    transform: scaleX(1);
+  }
 }
 
-.navlinks > li > a:hover::after,
-.navlinks > li > a:focus-visible::after {
-  transform: scaleX(1);
-}
-
-.nav-more:hover .nav-more-trigger::after,
-.nav-more-trigger[aria-expanded="true"]::after,
-.nav-more-trigger:focus-visible::after {
-  transform: scaleX(1);
-}
-
-/* Desplegable "Más": agrupa enlaces extra en escritorio para no amontonar el menú */
+/* ---------- Desplegable "Más" (escritorio) ---------- */
 .nav-more-trigger {
   background: none;
   border: none;
   padding: 0;
-  color: var(--muted);
-  font-family: inherit;
-  font-size: 0.85rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  color: rgba(245, 243, 238, 0.78);
+  font-family: var(--body);
+  font-size: 0.86rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -164,7 +277,7 @@
 
 .nav-more:hover .nav-more-trigger,
 .nav-more-trigger[aria-expanded="true"] {
-  color: var(--brass);
+  color: var(--ivory);
 }
 
 .nav-more-arrow {
@@ -177,22 +290,32 @@
   transform: rotate(180deg);
 }
 
+/* Puente invisible para que el menú no se cierre al bajar el mouse */
+.nav-more::before {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: -10px;
+  right: -10px;
+  height: 22px;
+}
+
 .nav-more-dropdown {
   position: absolute;
   top: 100%;
-  right: 0;
+  right: -12px;
   margin-top: 18px;
-  min-width: 160px;
-  background: var(--bg);
+  min-width: 190px;
+  padding: 8px;
+  background: var(--surface-2);
   border: 1px solid var(--hairline);
-  border-radius: 4px;
+  border-radius: 16px;
   list-style: none;
-  padding: 6px 0;
   opacity: 0;
   visibility: hidden;
   transform: translateY(-6px);
-  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.35);
+  transition: opacity 0.2s ease, transform 0.25s var(--ease), visibility 0.2s ease;
+  box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.6);
   z-index: 20;
 }
 
@@ -208,27 +331,43 @@
   border: none;
 }
 
-.nav-more-dropdown a {
-  display: block;
-  padding: 10px 16px;
-  font-size: 0.85rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--muted);
+.navlinks .nav-more-dropdown a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 11px 14px;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  color: var(--ivory);
   white-space: nowrap;
 }
 
-.nav-more-dropdown a:hover {
-  color: var(--brass);
-  background: rgba(201, 162, 76, 0.08);
+.navlinks .nav-more-dropdown a::after {
+  content: '→';
+  position: static;
+  height: auto;
+  background: none;
+  transform: none;
+  color: var(--muted);
+  transition: color 0.25s ease, transform 0.3s var(--ease);
 }
 
+.navlinks .nav-more-dropdown a:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--ivory);
+}
 
-/*para los botones de redes sociales*/
+.navlinks .nav-more-dropdown a:hover::after {
+  color: var(--brass);
+  transform: translateX(3px);
+}
+
+/* ---------- Redes sociales junto al nombre ---------- */
 .brand-group {
   display: flex;
   align-items: center;
   gap: 14px;
+  min-width: 0;
 }
 
 .header-socials {
@@ -246,6 +385,7 @@
 }
 
 .header-socials svg {
+  display: block;
   width: 14px;
   height: 14px;
   fill: currentColor;
@@ -253,12 +393,21 @@
 
 @media (min-width: 480px) {
   .header-socials {
-    gap: 10px;
+    gap: 12px;
   }
 
   .header-socials svg {
-    width: 16px;
-    height: 16px;
+    width: 15px;
+    height: 15px;
   }
 }
-/*para los botones de redes sociales*/
+
+@media (min-width: 1024px) {
+  .brand {
+    font-size: 1rem;
+  }
+
+  .brand-group {
+    gap: 22px;
+  }
+}

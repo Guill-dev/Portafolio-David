@@ -1,57 +1,62 @@
+/* Estructura común de cada sección ("movimiento") */
 .movement {
-  padding: 70px 20px 30px;
-  border-top: 1px solid var(--hairline);
-  max-width: 680px;
+  max-width: var(--max);
   margin: 0 auto;
+  padding: clamp(64px, 9vw, 128px) var(--gutter) 0;
 }
 
 .movement-head {
   display: flex;
-  align-items: baseline;
-  gap: 16px;
-  margin-bottom: 28px;
-  flex-wrap: wrap;
-  
+  flex-direction: column;
+  gap: 18px;
+  padding-top: 18px;
+  margin-bottom: clamp(32px, 5vw, 64px);
+  border-top: 1px solid var(--hairline);
 }
 
 .movement-num {
-  font-family: var(--display);
-  font-style: italic;
-  font-size: 0.95rem;
-  color: var(--brass-dim);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.movement-num::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--brass);
 }
 
 .movement-head h2 {
   font-family: var(--display);
-  font-weight: 500;
-  font-size: 1.6rem;
-  
-  
+  font-weight: 600;
+  font-size: clamp(2.3rem, 7vw, 6.4rem);
+  line-height: 0.95;
+  letter-spacing: -0.045em;
+  text-wrap: balance;
 }
 
 .movement-body {
-  font-size: 0.98rem;
-  
+  font-size: 1rem;
+  color: var(--soft);
 }
 
 .movement-body p + p {
-  margin-top: 14px;
+  margin-top: 16px;
+}
+
+.movement-body p {
+  text-wrap: pretty;
 }
 
 @media (min-width: 760px) {
-  .movement {
-    padding: 120px 32px 40px;
-  }
-
-  .movement-head h2 {
-    font-size: clamp(1.8rem, 4vw, 2.7rem);
-  }
-
   .movement-body {
-    font-size: 1.05rem;
+    font-size: 1.06rem;
   }
-}
-.movement-body p {
-  text-align: justify;
-  hyphens: auto;
 }

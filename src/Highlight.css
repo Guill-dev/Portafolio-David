@@ -1,7 +1,15 @@
 .highlight {
+  color: var(--ivory);
+  font-weight: 500;
   transition: color 0.25s ease;
   cursor: pointer;
   text-decoration: none;
+}
+
+a.highlight {
+  text-decoration: underline;
+  text-decoration-color: var(--brass-dim);
+  text-underline-offset: 3px;
 }
 
 .highlight:hover {

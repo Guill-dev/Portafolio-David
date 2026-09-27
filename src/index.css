@@ -1,15 +1,30 @@
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Fraunces:ital,opsz,wght@1,9..144,400;1,9..144,500&display=swap');
 
+/*
+  Estilo general: fondo negro puro, tipografía grotesca grande y apretada
+  (inspirada en studio-size.com) con el dorado del trombón como acento
+  y una cursiva serif (Fraunces) para los detalles.
+*/
 :root {
-  --bg: #0A0B0D;
+  --bg: #000;
+  --surface: #0c0c0c;
+  --surface-2: #141414;
   --brass: #C9A24C;
   --brass-dim: #8f7538;
   --wine: #5C2430;
-  --ivory: #F1ECE0;
-  --muted: #9B968C;
-  --hairline: rgba(241, 236, 224, 0.10);
-  --display: 'Fraunces', serif;
-  --body: 'Inter', sans-serif;
+  --ivory: #F5F3EE;
+  --muted: #8E8B85;
+  --soft: #BDBAB3;
+  --hairline: rgba(255, 255, 255, 0.12);
+  --display: 'Inter Tight', 'Inter', system-ui, sans-serif;
+  --body: 'Inter', system-ui, sans-serif;
+  --serif: 'Fraunces', Georgia, serif;
+
+  --gutter: clamp(20px, 4vw, 56px);
+  --max: 1440px;
+  --radius: 20px;
+  --header-h: 64px;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 * {
@@ -18,12 +33,30 @@
   padding: 0;
 }
 
+html {
+  scroll-padding-top: var(--header-h);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
 body {
   background: var(--bg);
   color: var(--ivory);
   font-family: var(--body);
   line-height: 1.6;
+  letter-spacing: -0.01em;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: var(--brass);
+  color: #000;
 }
 
 a {
@@ -34,4 +67,26 @@ a {
 img {
   max-width: 100%;
   display: block;
+}
+
+button {
+  font: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--brass);
+  outline-offset: 3px;
+}
+
+/* Aparición suave de bloques al hacer scroll (ver revelar.js).
+   Solo se oculta si el script está activo, así nada queda invisible. */
+.revelado-activo [data-reveal] {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
+}
+
+.revelado-activo [data-reveal].revelado {
+  opacity: 1;
+  transform: none;
 }

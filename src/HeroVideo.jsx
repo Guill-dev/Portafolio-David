@@ -1,0 +1,140 @@
+import { useEffect, useEffectEvent, useRef, useState } from 'react';
+import { HERO_VIDEO } from './videoPortada';
+import fotoPortada from './assets/Imagenes/perfil/DavidPortada-retrato.jpg';
+
+const API_YOUTUBE = 'https://www.youtube.com/iframe_api';
+
+// Carga una sola vez la API oficial de YouTube para saber cuándo
+// el video de ejemplo realmente empezó a reproducirse.
+function cargarApiYouTube() {
+  if (window.YT?.Player) return Promise.resolve(window.YT);
+
+  return new Promise((resolve) => {
+    const anterior = window.onYouTubeIframeAPIReady;
+    window.onYouTubeIframeAPIReady = () => {
+      anterior?.();
+      resolve(window.YT);
+    };
+
+    if (!document.querySelector(`script[src="${API_YOUTUBE}"]`)) {
+      const script = document.createElement('script');
+      script.src = API_YOUTUBE;
+      document.head.appendChild(script);
+    }
+  });
+}
+
+// Video de YouTube silenciado y en bucle, usado como fondo de ejemplo
+function FondoYouTube({ id, inicio, onReproduciendo }) {
+  const contenedorRef = useRef(null);
+  const avisarReproduccion = useEffectEvent(() => onReproduciendo());
+
+  useEffect(() => {
+    const contenedor = contenedorRef.current;
+    // YouTube reemplaza este div por su iframe; como React no lo maneja,
+    // se puede crear y destruir libremente.
+    const destino = document.createElement('div');
+    contenedor.appendChild(destino);
+
+    let reproductor = null;
+    let cancelado = false;
+
+    cargarApiYouTube().then((YT) => {
+      if (cancelado) return;
+
+      reproductor = new YT.Player(destino, {
+        host: 'https://www.youtube-nocookie.com',
+        videoId: id,
+        playerVars: {
+          autoplay: 1,
+          mute: 1,
+          controls: 0,
+          playsinline: 1,
+          rel: 0,
+          disablekb: 1,
+          fs: 0,
+          iv_load_policy: 3,
+          start: inicio,
+        },
+        events: {
+          onReady: (e) => {
+            e.target.mute();
+            e.target.playVideo();
+          },
+          onStateChange: (e) => {
+            if (e.data === YT.PlayerState.PLAYING) avisarReproduccion();
+            // Bucle manual para volver al segundo elegido y no al inicio
+            if (e.data === YT.PlayerState.ENDED) {
+              e.target.seekTo(inicio, true);
+              e.target.playVideo();
+            }
+          },
+        },
+      });
+    });
+
+    return () => {
+      cancelado = true;
+      reproductor?.destroy?.();
+      contenedor.replaceChildren();
+    };
+  }, [id, inicio]);
+
+  return <div ref={contenedorRef} className="hero-video-youtube" aria-hidden="true" />;
+}
+
+function HeroVideo() {
+  const { archivo, poster, youtubeEjemplo, inicioEjemplo } = HERO_VIDEO;
+  const videoRef = useRef(null);
+  const [reproduciendo, setReproduciendo] = useState(false);
+  const prefiereReducido = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // iOS solo reproduce el video automáticamente si está silenciado de verdad
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    video.muted = true;
+    video.defaultMuted = true;
+    if (!prefiereReducido) video.play().catch(() => {});
+  }, [prefiereReducido]);
+
+  return (
+    <div className="hero-video">
+      {archivo ? (
+        <video
+          ref={videoRef}
+          src={archivo}
+          poster={poster || undefined}
+          muted
+          loop
+          playsInline
+          preload="metadata"
+        />
+      ) : (
+        <>
+          {!prefiereReducido && (
+            <FondoYouTube
+              id={youtubeEjemplo}
+              inicio={inicioEjemplo}
+              onReproduciendo={() => setReproduciendo(true)}
+            />
+          )}
+          {/* Foto de portada: tapa el video hasta que YouTube ya esté
+              reproduciendo, así no se ven sus controles ni su pantalla de carga */}
+          <img
+            className={`hero-video-cubierta ${reproduciendo ? 'oculta' : ''}`}
+            src={fotoPortada}
+            alt=""
+          />
+        </>
+      )}
+      <div className="hero-video-velo" aria-hidden="true" />
+      <a className="hero-video-cta" href="#presentaciones">
+        <span className="hero-video-cta-icono" aria-hidden="true">▶</span>
+        Ver presentaciones
+      </a>
+    </div>
+  );
+}
+
+export default HeroVideo;

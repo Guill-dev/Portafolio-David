@@ -1,183 +1,108 @@
-/* --- Definición de Animaciones para Awards --- */
-
-/* Efecto 1: Pulso sutil para las tarjetas */
-@keyframes pulso-award {
-  0% {
-    transform: scale(1);
-    box-shadow: 0 0 0 0 rgba(253, 229, 17, 0);
-  }
-  50% {
-    transform: scale(1.01);
-    box-shadow: 0 0 15px 6px rgba(201, 162, 76, 0.08);
-  }
-  100% {
-    transform: scale(1);
-    box-shadow: 0 0 0 0 rgba(201, 162, 76, 0);
-  }
+/* Lista de premios: filas grandes separadas por líneas finas.
+   Al pasar el mouse pasa un brillo dorado y el título se desplaza. */
+.awards-list {
+  list-style: none;
+  border-top: 1px solid var(--hairline);
 }
 
-/* Efecto 2: Brillo Metálico/Reflejo que pasa (adaptado) */
-@keyframes brillo-metalico-award {
-  0% {
-    left: -150%;
-  }
-  100% {
-    left: 150%;
-  }
-}
-
-/* --- Estilos de Awards Grid Actualizados --- */
-
-.awards-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 18px;
-  margin-top: 8px;
-  cursor: pointer;
-}
-
-.award-card {
-  display: flex;
-  gap: 20px;
-  align-items: center;
-  padding: 22px;
-  border: 1px solid var(--hairline);
-  border-radius: 6px;
-  background: linear-gradient(160deg, rgba(201, 162, 76, 0.04), transparent 60%);
-  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-  
-  /* --- NUEVO: Necesario para las animaciones --- */
+.award-row {
   position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 4px;
+  padding: 22px 0;
+  border-bottom: 1px solid var(--hairline);
   overflow: hidden;
-  
-  /* --- APLICAR ANIMACIÓN DE PULSO --- */
-  animation: pulso-award 4s ease-in-out infinite;
 }
 
-/* --- BRILLO METÁLICO (Pseudo-elemento ::after) --- */
-.award-card::after {
-  content: "";
+/* Brillo metálico que atraviesa la fila */
+.award-row::after {
+  content: '';
   position: absolute;
   top: 0;
   left: -150%;
   width: 100%;
   height: 100%;
-  
-  /* Gradiente blanco/sutil oblicuo */
   background: linear-gradient(
-    90deg, 
-    rgba(255, 255, 255, 0) 0%, 
-    rgba(162, 139, 96, 0.282) 50%,
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(162, 139, 96, 0.2) 50%,
     rgba(255, 255, 255, 0) 100%
   );
-  
   transform: skewX(-25deg);
-  
-  /* --- APLICAR ANIMACIÓN DE BRILLO --- */
-  animation: brillo-metalico-award 2.5s linear infinite;
-  animation-delay: 0.5s;
-  
-  /* Hacerlo más sutil que el botón */
   pointer-events: none;
 }
 
-/* --- ESTADO HOVER (mantiene efecto pero lo pausa opcionalmente) --- */
-.award-card:hover {
-  transform: translateY(-3px);
-  border-color: var(--brass-dim);
-  box-shadow: 0 16px 30px -18px rgba(186, 201, 76, 0.35);
-  
-  /* Opcional: pausar pulso y brillo al hacer hover */
-  /* animation-play-state: paused; */
-  /* .award-card:hover::after { animation-play-state: paused; } */
+.award-row:hover::after {
+  animation: brillo-metalico-award 1.1s ease;
 }
 
-/* --- EFECTO DE PRESIONAR (:active) --- */
-.award-card:active {
-  transform: translateY(1px) scale(0.98);
-  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.2);
-  border-color: rgba(103, 88, 55, 0.351);
-  background: rgba(201, 162, 76, 0.06);
-  
-  /* Pausar animaciones mientras se presiona */
-  animation-play-state: paused;
-}
-
-/* Asegurar que el pseudo-elemento también se pause */
-.award-card:active::after {
-  animation-play-state: paused;
-}
-
-/* --- Estilos existentes (sin cambios) --- */
-.award-medal {
-  position: relative;
-  flex-shrink: 0;
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  border: 1px solid var(--brass-dim);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: radial-gradient(circle at 50% 30%, rgba(201, 162, 76, 0.12), transparent 70%);
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.award-card:hover .award-medal {
-  border-color: var(--brass);
-  box-shadow: 0 0 0 4px rgba(201, 162, 76, 0.08);
-}
-
-.award-medal .laurel {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  color: var(--brass-dim);
-  opacity: 0.55;
+@keyframes brillo-metalico-award {
+  from {
+    left: -150%;
+  }
+  to {
+    left: 150%;
+  }
 }
 
 .award-year {
-  position: relative;
   font-family: var(--display);
-  font-weight: 600;
+  font-weight: 500;
   font-size: 0.85rem;
+  font-variant-numeric: tabular-nums;
   color: var(--brass);
-  letter-spacing: 0.02em;
 }
 
 .award-title {
   font-family: var(--display);
   font-weight: 500;
-  font-size: 1.02rem;
-  line-height: 1.35;
+  font-size: 1.15rem;
+  line-height: 1.25;
+  letter-spacing: -0.025em;
+  color: var(--ivory);
+  transition: transform 0.5s var(--ease), color 0.3s ease;
 }
 
 .award-org {
+  font-size: 0.85rem;
   color: var(--muted);
-  font-size: 0.82rem;
-  margin-top: 5px;
-  font-style: italic;
+  transition: color 0.3s ease;
 }
 
-/* --- Media Queries (sin cambios) --- */
-@media (min-width: 620px) {
-  .awards-grid {
-    grid-template-columns: 1fr 1fr;
-  }
+.award-row:hover .award-title {
+  transform: translateX(8px);
+  color: var(--brass);
+}
+
+.award-row:hover .award-org {
+  color: var(--soft);
 }
 
 @media (min-width: 760px) {
-  .award-medal {
-    width: 72px;
-    height: 72px;
+  .award-row {
+    grid-template-columns: 110px minmax(0, 1.5fr) minmax(0, 1fr);
+    align-items: baseline;
+    gap: 24px;
+    padding: 28px 0;
   }
 
   .award-year {
-    font-size: 0.95rem;
+    font-size: 1rem;
   }
 
   .award-title {
-    font-size: 1.08rem;
+    font-size: clamp(1.25rem, 2.2vw, 1.75rem);
+  }
+
+  .award-org {
+    font-size: 0.9rem;
+    text-align: right;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .award-row:hover::after {
+    animation: none;
   }
 }

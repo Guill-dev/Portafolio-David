@@ -1,54 +1,221 @@
+/* ---------- Portada ---------- */
 .hero {
-  min-height: 90svh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 60px 20px 50px;
-  background: radial-gradient(ellipse 80% 60% at 50% 20%, rgba(201, 162, 76, 0.10), transparent 60%);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas:
+    "titulos"
+    "meta"
+    "video"
+    "cue";
+  row-gap: 28px;
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 36px var(--gutter) 40px;
 }
 
-.hero-photo {
-  width: 140px;
-  height: 140px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 1px solid rgba(201, 162, 76, 0.35);
-  box-shadow: 0 0 0 8px rgba(201, 162, 76, 0.04), 0 20px 40px -15px rgba(0, 0, 0, 0.7);
-  margin-bottom: 28px;
-}
-
-.eyebrow {
-  font-size: 0.7rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--brass);
-  margin-bottom: 16px;
+.hero-titulos {
+  grid-area: titulos;
 }
 
 .hero h1 {
   font-family: var(--display);
+  font-weight: 600;
+  font-size: clamp(2.9rem, 8.2vw, 8rem);
+  line-height: 0.95;
+  letter-spacing: -0.045em;
+  color: var(--ivory);
+}
+
+.hero-linea {
+  margin-top: 0.18em;
+  font-family: var(--display);
   font-weight: 500;
-  font-size: 2.2rem;
-  line-height: 1.05;
-
-}
-
-
-.hero p.tag {
-  margin-top: 18px;
-  max-width: 90%;
+  font-size: clamp(1.9rem, 5vw, 4.8rem);
+  line-height: 1;
+  letter-spacing: -0.04em;
   color: var(--muted);
-  font-size: 0.95rem;
 }
 
-.scroll-cue {
+/* Palabra que va cambiando: entra deslizándose desde abajo */
+.palabra-rotativa {
+  display: block;
+  overflow: hidden;
+  padding: 0 0.1em 0.14em 0;
+  margin-bottom: -0.14em;
+  vertical-align: bottom;
+}
+
+.palabra-rotativa-texto {
+  display: inline-block;
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  color: var(--brass);
+  animation: palabra-entra 0.75s var(--ease) both;
+}
+
+@keyframes palabra-entra {
+  from {
+    transform: translateY(105%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* ---------- Foto, cargo y botones ---------- */
+.hero-meta {
+  grid-area: meta;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-top: 22px;
+  border-top: 1px solid var(--hairline);
+}
+
+.hero-perfil {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.hero-photo {
+  flex-shrink: 0;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid rgba(201, 162, 76, 0.45);
+}
+
+.hero .tag {
+  line-height: 1.35;
+}
+
+.hero .tag strong {
+  display: block;
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: 1rem;
+  letter-spacing: -0.01em;
+  color: var(--ivory);
+}
+
+.hero .tag span {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+/* ---------- Video ---------- */
+.hero-video-wrap {
+  grid-area: video;
+}
+
+.hero-video {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--surface);
+  container-type: size;
+}
+
+.hero-video video,
+.hero-video img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* El iframe de YouTube se agranda para cubrir el recuadro como un
+   "object-fit: cover" y esconder los controles del reproductor */
+.hero-video-youtube {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: max(100cqw, 177.78cqh);
+  height: max(100cqh, 56.25cqw);
+  transform: translate(-50%, -50%) scale(1.2);
+  pointer-events: none;
+}
+
+.hero-video-youtube iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* Foto que cubre el video de ejemplo mientras YouTube arranca */
+.hero-video .hero-video-cubierta {
+  object-position: 50% 46%;
+  transition: opacity 1.2s ease 2.2s;
+}
+
+.hero-video .hero-video-cubierta.oculta {
+  opacity: 0;
+}
+
+.hero-video-velo {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to top, rgba(0, 0, 0, 0.6), transparent 45%),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.25), transparent 25%);
+  pointer-events: none;
+}
+
+.hero-video-cta {
+  position: absolute;
+  left: 16px;
+  bottom: 16px;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  margin-top: 36px;
-  font-size: 0.65rem;
+  gap: 10px;
+  padding: 7px 18px 7px 7px;
+  border-radius: 999px;
+  background: rgba(245, 243, 238, 0.94);
+  color: #000;
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: 0.9rem;
+  letter-spacing: -0.01em;
+  transition: background 0.3s ease, transform 0.3s var(--ease);
+}
+
+.hero-video-cta:hover {
+  background: var(--brass);
+  transform: translateY(-2px);
+}
+
+.hero-video-cta-icono {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #000;
+  color: var(--ivory);
+  font-size: 0.6rem;
+  padding-left: 2px;
+}
+
+/* ---------- Aviso "Desplázate" ---------- */
+.scroll-cue {
+  grid-area: cue;
+  justify-self: center;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.68rem;
+  font-weight: 500;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--muted);
@@ -57,6 +224,7 @@
 
 .scroll-cue-icono {
   display: inline-block;
+  font-size: 0.9rem;
   animation: scroll-cue-rebote 2.2s ease-in-out infinite;
 }
 
@@ -94,104 +262,180 @@
   }
 }
 
+/* ---------- Entrada de la portada al terminar la pantalla de carga ---------- */
+.hero-anim {
+  opacity: 0;
+}
+
+.pagina-lista .hero-titulos,
+.pagina-lista .hero-meta,
+.pagina-lista .hero-video-wrap {
+  animation: hero-entra 1.1s var(--ease) forwards;
+}
+
+.pagina-lista .hero-meta {
+  animation-delay: 0.12s;
+}
+
+.pagina-lista .hero-video-wrap {
+  animation-delay: 0.22s;
+}
+
+.pagina-lista .scroll-cue {
+  animation:
+    hero-aparece 0.8s ease 0.5s forwards,
+    scroll-cue-flotar 2.2s ease-in-out infinite,
+    scroll-cue-brillo 2.2s ease-in-out infinite;
+}
+
+@keyframes hero-entra {
+  from {
+    opacity: 0;
+    transform: translateY(36px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes hero-aparece {
+  to {
+    opacity: 1;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .hero-anim,
+  .pagina-lista .hero-anim {
+    opacity: 1;
+    animation: none;
+  }
+
   .scroll-cue,
-  .scroll-cue-icono {
+  .scroll-cue-icono,
+  .palabra-rotativa-texto {
     animation: none;
   }
 }
 
-/* Pantallas más grandes: todo crece, pero compacto para que el aviso de
-   scroll quede visible sin tener que bajar */
-@media (min-width: 760px) {
-  .hero {
-    min-height: 86svh;
-    padding: 64px 24px 36px;
-  }
-
-  .hero-photo {
-    width: 170px;
-    height: 170px;
-    margin-bottom: 26px;
-  }
-
-  .hero h1 {
-    font-size: clamp(2.6rem, 6vw, 4.4rem);
-  }
-
-  .hero p.tag {
-    max-width: 480px;
-    font-size: 1.02rem;
-  }
-
-  .scroll-cue {
-    margin-top: 24px;
-  }
-}
-/* Botones "Mira a este artista" (S.E. Shires / OSNC) */
+/* ---------- Botones "Mira a este artista" (S.E. Shires / OSNC) ---------- */
 .shires-row {
   display: flex;
   flex-direction: column;
-  align-items: stretch;
-  gap: 12px;
-  width: 100%;
-  max-width: 320px;
-  margin: 4px auto 0;
-  
+  gap: 10px;
 }
 
 .shires-row a {
   display: flex;
   align-items: center;
-  justify-content: center;
-  padding: 14px 20px;
-  border: 1px solid var(--hairline);
+  justify-content: space-between;
+  gap: 14px;
+  padding: 12px 20px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
   border-radius: 999px;
-  font-family: var(--display);
-  font-style: italic;
-  font-size: 0.78rem;
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
   line-height: 1.4;
   color: var(--ivory);
-  text-decoration: none;
-  text-align: center;
   white-space: pre-line;
-  transition: border-color 0.25s ease, color 0.25s ease, background 0.25s ease, transform 0.15s ease;
-   border: 1px solid rgba(201, 162, 76, 0.35);
+  transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.shires-row a::after {
+  content: '↗';
+  font-size: 0.9rem;
+  letter-spacing: 0;
+  transition: transform 0.3s var(--ease);
 }
 
 .shires-row a:hover {
-  border-color: var(--brass);
-  color: var(--brass);
-  background: rgba(201, 162, 76, 0.06);
+  background: var(--ivory);
+  border-color: var(--ivory);
+  color: #000;
 }
 
-.shires-row a:active {
-  transform: scale(0.98);
+.shires-row a:hover::after {
+  transform: translate(2px, -2px);
 }
 
-/* A partir de tablet: los dos botones caben uno al lado del otro */
-@media (min-width: 480px) {
+/* ---------- Tablet ---------- */
+@media (min-width: 600px) {
+  .palabra-rotativa {
+    display: inline-block;
+  }
+
+  .hero-video {
+    aspect-ratio: 16 / 9;
+  }
+
+  .hero-video-cta {
+    left: 24px;
+    bottom: 24px;
+  }
+
   .shires-row {
     flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    max-width: 560px;
   }
 
   .shires-row a {
-    flex: 1 1 240px;
+    flex: 1 1 0;
   }
 }
 
 @media (min-width: 760px) {
-  .shires-row {
-    max-width: 640px;
+  .hero {
+    padding-top: 48px;
+    row-gap: 32px;
   }
 
-  .shires-row a {
-    font-size: 0.85rem;
-    padding: 14px 24px;
+  .hero-photo {
+    width: 64px;
+    height: 64px;
   }
 }
 
+/* ---------- Escritorio: el aviso de scroll sube junto al título ---------- */
+@media (min-width: 1024px) {
+  .hero {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "titulos cue"
+      "meta    meta"
+      "video   video";
+    padding-top: 56px;
+    padding-bottom: 72px;
+  }
 
+  .hero-meta {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 28px;
+  }
+
+  .shires-row {
+    flex: 0 1 auto;
+  }
+
+  .shires-row a {
+    flex: 0 1 auto;
+  }
+
+  .scroll-cue {
+    align-self: end;
+    justify-self: end;
+    margin-bottom: 0.6em;
+  }
+
+  .hero-video {
+    border-radius: 28px;
+  }
+
+  .hero-video-cta {
+    left: 32px;
+    bottom: 32px;
+    font-size: 0.95rem;
+  }
+}

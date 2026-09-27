@@ -54,16 +54,17 @@ function Header() {
 
         <button
           className="navtoggle"
-          aria-label="Abrir menú"
+          aria-label={menuOpen ? 'Cerrar menú' : 'Abrir menú'}
           aria-expanded={menuOpen}
           onClick={() => setMenuOpen((abierto) => !abierto)}
         >
-          ☰
+          <span className="navtoggle-linea" aria-hidden="true" />
+          <span className="navtoggle-linea" aria-hidden="true" />
         </button>
 
         <ul className={`navlinks ${menuOpen ? 'open' : ''}`}>
           {NAV_ITEMS.map((item) => (
-            <li key={item.id}>
+            <li key={item.id} className={item.id === 'contacto' ? 'nav-item-cta' : undefined}>
               <a href={item.href} onClick={() => setMenuOpen(false)}>
                 {item.label}
               </a>

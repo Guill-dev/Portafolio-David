@@ -67,6 +67,8 @@ function VideoRow() {
   const videoSaliente = VIDEOS[indiceSaliente];
   const videoActual = VIDEOS[indice];
 
+  const numero = (n) => String(n).padStart(2, '0');
+
   return (
     <Movement numeral="Movimiento II" title="Presentaciones" id="presentaciones">
       <div
@@ -74,14 +76,6 @@ function VideoRow() {
         onTouchStart={manejarInicioToque}
         onTouchEnd={manejarFinToque}
       >
-        <button
-          className="video-nav-arrow left"
-          aria-label="Presentación anterior"
-          onClick={anterior}
-        >
-          ‹
-        </button>
-
         {saliente && (
           <div className={`video-layer entrante ${saliente.direccion}`}>
             <VideoContenido
@@ -99,31 +93,47 @@ function VideoRow() {
             onReproducir={() => setVideoActivo(videoSaliente.id)}
           />
         </div>
+      </div>
 
-        <button
-          className="video-nav-arrow right"
-          aria-label="Siguiente presentación"
-          onClick={siguiente}
-        >
-          ›
-        </button>
+      <div className="video-info">
+        <div className="video-textos">
+          <p className="video-title">{videoActual.titulo}</p>
+          <p className="video-author" style={{ whiteSpace: 'pre-line' }}>
+            {videoActual.autor}
+          </p>
+        </div>
 
-        <div className="video-dots">
-          {VIDEOS.map((_, i) => (
-            <button
-              key={i}
-              className={`video-dot ${i === indice ? 'active' : ''}`}
-              aria-label={`Ver presentación ${i + 1}`}
-              onClick={() => irA(i, i > indice ? 'siguiente' : 'anterior')}
-            />
-          ))}
+        <div className="video-controles">
+          <span className="video-contador">
+            {numero(indice + 1)} <span>/ {numero(total)}</span>
+          </span>
+          <button
+            className="video-nav-arrow"
+            aria-label="Presentación anterior"
+            onClick={anterior}
+          >
+            ←
+          </button>
+          <button
+            className="video-nav-arrow"
+            aria-label="Siguiente presentación"
+            onClick={siguiente}
+          >
+            →
+          </button>
         </div>
       </div>
 
-      <p className="video-title">{videoActual.titulo}</p>
-      <p className="video-author" style={{ whiteSpace: 'pre-line' }}>
-        {videoActual.autor}
-      </p>
+      <div className="video-dots">
+        {VIDEOS.map((_, i) => (
+          <button
+            key={i}
+            className={`video-dot ${i === indice ? 'active' : ''}`}
+            aria-label={`Ver presentación ${i + 1}`}
+            onClick={() => irA(i, i > indice ? 'siguiente' : 'anterior')}
+          />
+        ))}
+      </div>
     </Movement>
   );
 }

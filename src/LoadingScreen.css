@@ -90,8 +90,8 @@
 /* --- Nombre y oficio --- */
 .loader-marca {
   font-family: var(--display);
-  font-weight: 500;
-  font-size: 1.45rem;
+  font-weight: 600;
+  font-size: 1.6rem;
   color: var(--ivory);
   opacity: 0;
   animation: loader-marca 1.2s ease 1.9s forwards;
@@ -109,7 +109,7 @@
   }
   to {
     opacity: 1;
-    letter-spacing: 0.02em;
+    letter-spacing: -0.03em;
     transform: translateY(0);
   }
 }
@@ -162,7 +162,7 @@
 
 @media (min-width: 760px) {
   .loader-marca {
-    font-size: 1.8rem;
+    font-size: 2.2rem;
   }
 
   .loader-clave {
@@ -193,7 +193,7 @@
     animation: none;
     opacity: 1;
     transform: none;
-    letter-spacing: 0.02em;
+    letter-spacing: -0.03em;
   }
 
   .loader-progreso-relleno {
