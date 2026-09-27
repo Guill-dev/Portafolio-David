@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import Shires from "./Shires";
 import HeroVideo from './HeroVideo';
-import fotoDavid from './assets/Imagenes/perfil/DavidPortada-avatar.jpg';
 
 const PALABRAS = ['solista', 'sinfónico', 'de cámara', 'colombiano'];
 
@@ -30,31 +29,32 @@ function PalabraRotativa({ palabras, intervalo = 2400 }) {
 function Hero() {
   return (
     <section className="hero" id="top">
-      <div className="hero-titulos hero-anim">
-        <h1>David Pérez Pantoja</h1>
-        <p className="hero-linea">
-          Trombón bajo <PalabraRotativa palabras={PALABRAS} />
-        </p>
+      {/* Video de fondo que cubre toda la primera pantalla */}
+      <div className="hero-fondo hero-anim" aria-hidden="true">
+        <HeroVideo />
+        <div className="hero-velo" />
       </div>
 
-      <a className="scroll-cue hero-anim" href="#historia">
-        Desplázate
-        <span className="scroll-cue-icono" aria-hidden="true">↓</span>
-      </a>
-
-      <div className="hero-meta hero-anim">
-        <div className="hero-perfil">
-          <img className="hero-photo" src={fotoDavid} alt="David Pérez Pantoja" />
-          <p className="tag">
-            <strong>Trombonista Colombiano</strong>
-            <span>Orquesta Sinfónica Nacional de Colombia</span>
+      <div className="hero-contenido">
+        <div className="hero-titulos hero-anim">
+          <h1>David Pérez Pantoja</h1>
+          <p className="hero-linea">
+            Trombón bajo <PalabraRotativa palabras={PALABRAS} />
           </p>
         </div>
-        <Shires />
-      </div>
 
-      <div className="hero-video-wrap hero-anim">
-        <HeroVideo />
+        <div className="hero-acciones hero-anim">
+          <a className="hero-video-cta" href="#presentaciones">
+            <span className="hero-video-cta-icono" aria-hidden="true">▶</span>
+            Ver presentaciones
+          </a>
+          <Shires />
+        </div>
+
+        <a className="scroll-cue hero-anim" href="#historia">
+          Desplázate
+          <span className="scroll-cue-icono" aria-hidden="true">↓</span>
+        </a>
       </div>
     </section>
   );

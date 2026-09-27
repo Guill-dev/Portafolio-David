@@ -72,11 +72,6 @@ function LoadingScreen({ onFinish }) {
           David <span>Pérez Pantoja</span>
         </p>
         <p className="loader-oficio">Trombonista Colombiano</p>
-
-        <svg className="loader-progreso" viewBox="0 0 60 60" aria-hidden="true">
-          <circle className="loader-progreso-fondo" cx="30" cy="30" r="27" />
-          <circle className="loader-progreso-relleno" cx="30" cy="30" r="27" />
-        </svg>
       </div>
     </div>
   );

@@ -130,36 +130,6 @@
   }
 }
 
-/* --- Círculo de progreso --- */
-.loader-progreso {
-  width: 40px;
-  height: 40px;
-  margin: 30px auto 0;
-  transform: rotate(-90deg);
-}
-
-.loader-progreso-fondo {
-  fill: none;
-  stroke: rgba(241, 236, 224, 0.12);
-  stroke-width: 3;
-}
-
-.loader-progreso-relleno {
-  fill: none;
-  stroke: var(--brass);
-  stroke-width: 3;
-  stroke-linecap: round;
-  stroke-dasharray: 169.65;
-  stroke-dashoffset: 169.65;
-  animation: loader-progreso 3.4s cubic-bezier(0.45, 0, 0.25, 1) forwards;
-}
-
-@keyframes loader-progreso {
-  to {
-    stroke-dashoffset: 0;
-  }
-}
-
 @media (min-width: 760px) {
   .loader-marca {
     font-size: 2.2rem;
@@ -194,10 +164,5 @@
     opacity: 1;
     transform: none;
     letter-spacing: -0.03em;
-  }
-
-  .loader-progreso-relleno {
-    animation: none;
-    stroke-dashoffset: 0;
   }
 }

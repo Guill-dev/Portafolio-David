@@ -37,7 +37,25 @@ function FondoYouTube({ id, inicio, onReproduciendo }) {
     contenedor.appendChild(destino);
 
     let reproductor = null;
+    let listo = false;
     let cancelado = false;
+
+    // Si la página cargó en segundo plano (otra pestaña, ventana minimizada)
+    // YouTube no arranca solo: se vuelve a intentar al hacerse visible
+    // o con la primera interacción del visitante.
+    function intentarReproducir() {
+      if (!listo || document.hidden) return;
+      const estado = reproductor.getPlayerState();
+      if (estado === window.YT.PlayerState.PLAYING || estado === window.YT.PlayerState.BUFFERING) return;
+      reproductor.mute();
+      reproductor.playVideo();
+    }
+
+    const eventosInteraccion = ['pointerdown', 'keydown', 'scroll'];
+    document.addEventListener('visibilitychange', intentarReproducir);
+    eventosInteraccion.forEach((evento) =>
+      window.addEventListener(evento, intentarReproducir, { passive: true })
+    );
 
     cargarApiYouTube().then((YT) => {
       if (cancelado) return;
@@ -58,6 +76,7 @@ function FondoYouTube({ id, inicio, onReproduciendo }) {
         },
         events: {
           onReady: (e) => {
+            listo = true;
             e.target.mute();
             e.target.playVideo();
           },
@@ -75,6 +94,10 @@ function FondoYouTube({ id, inicio, onReproduciendo }) {
 
     return () => {
       cancelado = true;
+      document.removeEventListener('visibilitychange', intentarReproducir);
+      eventosInteraccion.forEach((evento) =>
+        window.removeEventListener(evento, intentarReproducir)
+      );
       reproductor?.destroy?.();
       contenedor.replaceChildren();
     };
@@ -128,11 +151,6 @@ function HeroVideo() {
           />
         </>
       )}
-      <div className="hero-video-velo" aria-hidden="true" />
-      <a className="hero-video-cta" href="#presentaciones">
-        <span className="hero-video-cta-icono" aria-hidden="true">▶</span>
-        Ver presentaciones
-      </a>
     </div>
   );
 }
