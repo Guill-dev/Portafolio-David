@@ -40,8 +40,8 @@ function App() {
       <Hero />
       <Historia />
       <VideoRow />
-      <Awards/>
       <Events />
+      <Awards />
       <Contact />
       <Footer />
     </div>

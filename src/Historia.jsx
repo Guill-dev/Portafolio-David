@@ -16,7 +16,7 @@ function Historia() {
           <figcaption>Puerres, Nariño · 1999</figcaption>
         </figure>
 
-        <div className="historia-texto">
+        <div className="historia-texto tarjeta">
           {/* Párrafo 1: Se muestra siempre */}
           <p className="historia-lead">
             Stiven David Pérez Pantoja, trombón bajo, es un destacado músico nariñense, oriundo de{' '}

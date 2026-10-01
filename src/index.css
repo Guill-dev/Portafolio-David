@@ -20,6 +20,7 @@
   --body: 'Inter', system-ui, sans-serif;
   --serif: 'Fraunces', Georgia, serif;
 
+
   --gutter: clamp(20px, 4vw, 56px);
   --max: 1440px;
   --radius: 20px;
@@ -89,4 +90,22 @@ button {
 .revelado-activo [data-reveal].revelado {
   opacity: 1;
   transform: none;
+}
+
+/* Tarjeta con fondo de contraste para que el texto no quede "suelto"
+   sobre el fondo animado. La usan Historia y Eventos.
+   Para usarla en cualquier parte: <div className="tarjeta">...</div> */
+.tarjeta {
+  padding: 28px 22px;
+  border-radius: var(--radius);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(201, 162, 76, 0.02));
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  text-align: justify;
+  hyphens: auto;   /* corta palabras largas con guion y reduce los huecos */
+}
+
+@media (min-width: 760px) {
+  .tarjeta {
+    padding: 44px 48px;
+  }
 }

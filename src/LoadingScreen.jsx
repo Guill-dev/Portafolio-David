@@ -22,7 +22,7 @@ function LoadingScreen({ onFinish }) {
 
   useEffect(() => {
     const prefiereReducido = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const duracion = prefiereReducido ? 800 : 3400;
+    const duracion = prefiereReducido ? 2900 : 2900;
 
     document.body.style.overflow = 'hidden';
 

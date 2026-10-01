@@ -21,8 +21,7 @@
   container-type: size;
 }
 
-.hero-video video,
-.hero-video img {
+.hero-video video {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -32,10 +31,12 @@
 
 /* El iframe de YouTube se agranda para cubrir la pantalla como un
    "object-fit: cover" y esconder los controles del reproductor */
+
+   /*posicionamiento del video en la pantalla principal*/
 .hero-video-youtube {
   position: absolute;
-  top: 50%;
-  left: 50%;
+  top: 60%;
+  left: 40%;
   width: max(100cqw, 177.78cqh);
   height: max(100cqh, 56.25cqw);
   transform: translate(-50%, -50%) scale(1.2);
@@ -47,16 +48,6 @@
   width: 100%;
   height: 100%;
   border: 0;
-}
-
-/* Foto que cubre el video de ejemplo mientras YouTube arranca */
-.hero-video .hero-video-cubierta {
-  object-position: 50% 40%;
-  transition: opacity 1.2s ease 2.2s;
-}
-
-.hero-video .hero-video-cubierta.oculta {
-  opacity: 0;
 }
 
 /* Oscurece el video para que las letras se lean bien */

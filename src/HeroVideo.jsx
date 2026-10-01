@@ -1,11 +1,10 @@
-import { useEffect, useEffectEvent, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { HERO_VIDEO } from './videoPortada';
-import fotoPortada from './assets/Imagenes/perfil/DavidPortada-retrato.jpg';
 
 const API_YOUTUBE = 'https://www.youtube.com/iframe_api';
 
-// Carga una sola vez la API oficial de YouTube para saber cuándo
-// el video de ejemplo realmente empezó a reproducirse.
+// Carga una sola vez la API oficial de YouTube para poder controlar
+// el video de ejemplo (bucle y reintentos de reproducción).
 function cargarApiYouTube() {
   if (window.YT?.Player) return Promise.resolve(window.YT);
 
@@ -25,9 +24,8 @@ function cargarApiYouTube() {
 }
 
 // Video de YouTube silenciado y en bucle, usado como fondo de ejemplo
-function FondoYouTube({ id, inicio, onReproduciendo }) {
+function FondoYouTube({ id, inicio }) {
   const contenedorRef = useRef(null);
-  const avisarReproduccion = useEffectEvent(() => onReproduciendo());
 
   useEffect(() => {
     const contenedor = contenedorRef.current;
@@ -81,7 +79,6 @@ function FondoYouTube({ id, inicio, onReproduciendo }) {
             e.target.playVideo();
           },
           onStateChange: (e) => {
-            if (e.data === YT.PlayerState.PLAYING) avisarReproduccion();
             // Bucle manual para volver al segundo elegido y no al inicio
             if (e.data === YT.PlayerState.ENDED) {
               e.target.seekTo(inicio, true);
@@ -109,7 +106,6 @@ function FondoYouTube({ id, inicio, onReproduciendo }) {
 function HeroVideo() {
   const { archivo, poster, youtubeEjemplo, inicioEjemplo } = HERO_VIDEO;
   const videoRef = useRef(null);
-  const [reproduciendo, setReproduciendo] = useState(false);
   const prefiereReducido = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   // iOS solo reproduce el video automáticamente si está silenciado de verdad
@@ -134,22 +130,7 @@ function HeroVideo() {
           preload="metadata"
         />
       ) : (
-        <>
-          {!prefiereReducido && (
-            <FondoYouTube
-              id={youtubeEjemplo}
-              inicio={inicioEjemplo}
-              onReproduciendo={() => setReproduciendo(true)}
-            />
-          )}
-          {/* Foto de portada: tapa el video hasta que YouTube ya esté
-              reproduciendo, así no se ven sus controles ni su pantalla de carga */}
-          <img
-            className={`hero-video-cubierta ${reproduciendo ? 'oculta' : ''}`}
-            src={fotoPortada}
-            alt=""
-          />
-        </>
+        !prefiereReducido && <FondoYouTube id={youtubeEjemplo} inicio={inicioEjemplo} />
       )}
     </div>
   );

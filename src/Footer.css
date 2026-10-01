@@ -36,12 +36,13 @@
   transform: translateY(-3px);
 }
 
+/* Desde tablet: todo en una sola fila, centrada */
 @media (min-width: 760px) {
   .footer-inner {
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: center;
+    gap: 28px;
     padding: 32px var(--gutter) 40px;
     font-size: 0.8rem;
-    text-align: left;
   }
 }

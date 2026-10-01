@@ -3,17 +3,59 @@ import { useState, useEffect, useRef } from 'react';
 
 function ImageCarousel({ items, autoplayMs = 5000 }) {
   const [indice, setIndice] = useState(0);
+  // true mientras el usuario está mirando los afiches (tocó o hizo clic en el carrusel)
+  const [pausado, setPausado] = useState(false);
+  // true cuando el carrusel se ve en pantalla
+  const [visible, setVisible] = useState(false);
   const inicioX = useRef(null);
 
+  // Las tres partes del carrusel (afiche, flechas y barra), para saber
+  // si un toque fue dentro o fuera de él
+  const frameRef = useRef(null);
+  const infoRef = useRef(null);
+  const dotsRef = useRef(null);
+
+  // Avance automático: solo si se ve en pantalla y nadie lo está usando
   useEffect(() => {
+    if (pausado || !visible) return;
+
     const temporizador = setInterval(() => {
       setIndice((actual) => (actual + 1) % items.length);
     }, autoplayMs);
 
     return () => clearInterval(temporizador);
-  }, [items.length, autoplayMs]); // Eliminamos 'indice' de aquí para evitar reinicios bruscos del timer
+  }, [items.length, autoplayMs, pausado, visible]);
 
+  // Un toque o clic dentro del carrusel lo pausa; fuera de él, lo reanuda
+  useEffect(() => {
+    function alTocar(e) {
+      const partes = [frameRef.current, infoRef.current, dotsRef.current];
+      const dentro = partes.some((parte) => parte?.contains(e.target));
+      setPausado(dentro);
+    }
+
+    document.addEventListener('pointerdown', alTocar);
+    return () => document.removeEventListener('pointerdown', alTocar);
+  }, []);
+
+  // Al salir de la pantalla se quita la pausa, para que vuelva a avanzar
+  // solo cuando el visitante regrese
+  useEffect(() => {
+    const observador = new IntersectionObserver(
+      ([entrada]) => {
+        setVisible(entrada.isIntersecting);
+        if (!entrada.isIntersecting) setPausado(false);
+      },
+      { threshold: 0.3 }
+    );
+
+    observador.observe(frameRef.current);
+    return () => observador.disconnect();
+  }, []);
+
+  // Cambio hecho por el usuario (flechas, barra, deslizar o teclado)
   function irA(nuevoIndice) {
+    setPausado(true);
     setIndice((nuevoIndice + items.length) % items.length);
   }
 
@@ -37,6 +79,7 @@ function ImageCarousel({ items, autoplayMs = 5000 }) {
   return (
     <>
       <div
+        ref={frameRef}
         className="carousel-frame"
         onTouchStart={manejarInicioToque}
         onTouchEnd={manejarFinToque}
@@ -56,7 +99,7 @@ function ImageCarousel({ items, autoplayMs = 5000 }) {
         </div>
       </div>
 
-      <div className="carousel-info">
+      <div ref={infoRef} className="carousel-info">
         <p className="carousel-caption">{items[indice]?.caption}</p>
 
         <div className="carousel-controles">
@@ -72,7 +115,7 @@ function ImageCarousel({ items, autoplayMs = 5000 }) {
         </div>
       </div>
 
-      <div className="carousel-dots">
+      <div ref={dotsRef} className="carousel-dots">
         {items.map((_, i) => (
           <button
             key={i}

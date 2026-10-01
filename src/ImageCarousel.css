@@ -1,11 +1,102 @@
-.events-intro {
-  max-width: 560px;
+/* ---------- Tarjeta de texto de Eventos ---------- */
+.events-tarjeta {
   margin-bottom: 28px;
+}
+
+/* Frase principal: blanca y grande, como el primer párrafo de Historia */
+.events-intro {
   font-family: var(--display);
   font-size: clamp(1.15rem, 2vw, 1.45rem);
   line-height: 1.35;
   letter-spacing: -0.02em;
   color: var(--ivory);
+  text-align: left;
+}
+
+/* Descripción: gris, como el resto del texto de Historia */
+.events-descripcion {
+  margin-top: 16px;
+  color: var(--soft);
+}
+
+/* Enlace con forma de botón (píldora) */
+.events-enlace {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 24px;
+  padding: 11px 22px;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 999px;
+  color: var(--ivory);
+  font-size: 0.88rem;
+  font-weight: 500;
+  transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.events-enlace::after {
+  content: '→';
+}
+
+.events-enlace:hover {
+  background: var(--ivory);
+  border-color: var(--ivory);
+  color: #000;
+}
+
+/* Párrafos que se ocultan en celular y tablet */
+.events-mas {
+  margin-top: 16px;
+}
+
+/* Fila con "Leer más" y "Sigamos en contacto" */
+.events-acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+/* Celular: solo "Leer más", centrado y con su tamaño normal */
+@media (max-width: 759px) {
+  .events-acciones {
+    justify-content: center;
+  }
+
+  .events-acciones .events-enlace {
+    display: none;
+  }
+}
+
+/* Dos clases (.events-acciones .btn-leer-mas) para ganarle a la regla
+   de Historia.css, que solo usa una */
+.events-acciones .btn-leer-mas,
+.events-acciones .events-enlace {
+  margin-top: 0;
+}
+
+/* Celular y tablet: solo el primer párrafo hasta tocar "Leer más" */
+@media (max-width: 1023px) {
+  .events-tarjeta:not(.abierta) .events-mas {
+    display: none;
+  }
+
+  .events-tarjeta.abierta .events-mas {
+    animation: texto-aparece 0.6s var(--ease) both;
+  }
+}
+
+/* Computador: el texto cabe junto al afiche, así que el botón sobra */
+@media (min-width: 1024px) {
+  .events-acciones .events-leer-mas {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .events-tarjeta.abierta .events-mas {
+    animation: none;
+  }
 }
 
 .carousel-frame {
@@ -160,5 +251,71 @@
 @media (min-width: 1024px) {
   .carousel-frame {
     border-radius: 28px;
+  }
+}
+
+/* =====================================================================
+   SOLO COMPUTADOR (desde 1024px de ancho)
+   El texto va a la izquierda y el afiche grande a la derecha.
+   Debajo, a todo el ancho, quedan el contador, las flechas y la barra.
+   Celular y tablet no cambian.
+
+   👉 Para ajustar el tamaño cambia estos 3 valores:
+      --evento-alto     Alto del afiche (es lo que lo hace más grande o más
+                        pequeño; el ancho se calcula solo).
+                        "92vh" = 92% del alto de la pantalla, con un tope
+                        de 920px.
+                        Más grande:  min(100vh, 1100px)
+                        Más pequeño: min(80vh, 700px)
+      --evento-ancho    Espacio máximo para el afiche comparado con la
+                        columna de texto (que vale 1fr). Súbelo si el
+                        afiche no crece aunque aumentes --evento-alto.
+      --evento-relleno  Margen entre el afiche y el borde del recuadro.
+                        0px = el afiche llena el recuadro.
+   ===================================================================== */
+@media (min-width: 1024px) {
+  .movement-eventos .movement-body {
+    --evento-alto: min(120vh, 3000px);
+    --evento-ancho: 1.0fr;
+    --evento-relleno: 0px;
+
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, var(--evento-ancho));
+    grid-template-areas:
+      "intro  afiche"
+      "info   info"
+      "puntos puntos";
+    column-gap: clamp(32px, 4vw, 64px);
+  }
+
+  .movement-eventos .events-tarjeta {
+    grid-area: intro;
+    align-self: start;
+    margin-bottom: 0;
+  }
+
+  .movement-eventos .events-intro {
+    font-size: clamp(1.4rem, 2.2vw, 2rem);
+  }
+
+  /* El recuadro toma la forma del afiche (vertical 4:5) */
+  .movement-eventos .carousel-frame {
+    grid-area: afiche;
+    justify-self: end;
+    height: var(--evento-alto);
+    aspect-ratio: 4 / 5;
+    max-width: 100%;
+  }
+
+  .movement-eventos .carousel-img {
+    padding: var(--evento-relleno);
+  }
+
+  .movement-eventos .carousel-info {
+    grid-area: info;
+  }
+
+  .movement-eventos .carousel-dots {
+    grid-area: puntos;
   }
 }

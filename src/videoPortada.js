@@ -15,7 +15,7 @@ export const HERO_VIDEO = {
   poster: '',
 
   // Solo se usa mientras "archivo" esté vacío
-  youtubeEjemplo: 'bUml0PTV-tQ',
+  youtubeEjemplo: 'PXkibZee4gg',
   // Segundo del video de YouTube desde el que empieza el ejemplo
-  inicioEjemplo: 40,
+  inicioEjemplo: 213,
 };
