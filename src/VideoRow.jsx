@@ -111,7 +111,7 @@ function VideoRow() {
 
   return (
     <Movement numeral="Movimiento II" title="Presentaciones">
-      {/* El video se queda quieto en el centro y se va abriendo al hacer scroll
+      {/* El video se abre solo al aparecer en pantalla y se cierra al subir
           (ver EscenaScroll.jsx y EscenaScroll.css).
           ancla="presentaciones": los enlaces a #presentaciones (el menú) llevan
           directo al video ya abierto, sin la animación */}

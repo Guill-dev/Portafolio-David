@@ -1,8 +1,8 @@
-/* Mientras se abre, el video completo (con su título, flechas y barra)
-   debe caber en la pantalla: el ancho se limita según el alto disponible.
+/* El video completo (con su título, flechas y barra) debe caber en la
+   pantalla al llegar desde el menú: el ancho se limita según el alto disponible.
    190px = espacio para el título del video, las flechas y la barra.
    Nunca queda más angosto que la mitad del espacio (50%). */
-.video-escena .escena-fija {
+.video-escena .escena-contenido {
   width: min(100%, max(50%, calc((100svh - var(--header-h) - 190px) * 16 / 9)));
   margin-inline: auto;
   container-type: inline-size; /* así 100cqw = el ancho del video del frente */
@@ -61,9 +61,9 @@
 }
 
 /* Los videos de los lados: más apagados. Aparecen cuando el del frente
-   ya casi terminó de abrirse con el scroll (--p de EscenaScroll) */
+   ya casi terminó de abrirse (--abierto de EscenaScroll) */
 .video-cara:not(.activa) {
-  opacity: calc(0.4 * clamp(0, calc((var(--p) - 0.6) * 2.5), 1));
+  opacity: calc(0.4 * clamp(0, calc((var(--abierto) - 0.6) * 2.5), 1));
 }
 
 .video-cara iframe {

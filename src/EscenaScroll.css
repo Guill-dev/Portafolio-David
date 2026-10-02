@@ -1,49 +1,34 @@
-/* Escena que se queda quieta mientras se hace scroll (ver EscenaScroll.jsx).
-     --p          avance: 0 = cerrado, 1 = abierto del todo (lo pone el JS)
-     --alto-fija  alto del bloque que se queda quieto (lo mide el JS)
-   Sin JavaScript --p vale 1, así que todo se ve abierto y normal. */
+/* Escena que se abre sola al aparecer en pantalla (ver EscenaScroll.jsx).
+   --abierto: 0 = cerrada, 1 = abierta. EscenaScroll.jsx solo pone o quita
+   la clase "abierta"; el paso de 0 a 1 lo anima el navegador. */
+
+/* @property registra la variable para que se pueda animar con transition.
+   Una variable normal no se anima: cambia de golpe de un valor al otro. */
+@property --abierto {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 1;
+}
+
 .escena {
-  --p: 1;
-  --alto-fija: 0px;
-  --recorrido: 60vh; /* cuánto hay que bajar mientras la escena está quieta */
-  /* Distancia desde arriba a la que se queda quieta: centrada debajo del menú */
-  --tope: max(var(--header-h), calc((100svh + var(--header-h) - var(--alto-fija)) / 2));
-  position: relative; /* para ubicar la marca .escena-ancla */
+  --abierto: 0;
+  transition: --abierto 1.4s var(--ease); /* 👉 duración de la animación */
+  scroll-margin-top: 16px; /* al llegar desde el menú, un respiro bajo la barra */
 }
 
-@media (min-width: 1024px) {
-  .escena {
-    --recorrido: 80vh;
-  }
+.escena.abierta {
+  --abierto: 1;
 }
 
-/* Espacio extra al final: es el "camino" en el que la escena se queda quieta */
-.escena::after {
-  content: '';
-  display: block;
-  height: var(--recorrido);
+/* Al llegar desde el menú: aparece ya abierta, sin animación */
+.escena.de-golpe {
+  transition: none;
 }
 
-/* Se queda quieta centrada en la pantalla, debajo del menú */
-.escena-fija {
-  position: sticky;
-  top: var(--tope);
-}
-
-/* Marca invisible a la que llevan los enlaces (por ejemplo #presentaciones).
-   Está justo en el punto del scroll en que la escena ya terminó de abrirse
-   y sigue quieta en pantalla (95% de la parte quieta). Como la página deja
-   un margen arriba del tamaño del menú, se descuenta --header-h */
-.escena-ancla {
-  position: absolute;
-  left: 0;
-  top: calc(var(--header-h) - var(--tope) + var(--recorrido) * 0.95);
-}
-
-/* Ventana que se abre. Con --p en 0 recorta el contenido a una píldora
-   pequeña en el centro (42% por cada lado); con --p en 1 no recorta nada */
+/* Ventana que se abre. Con --abierto en 0 recorta el contenido a una
+   píldora pequeña en el centro (42% por cada lado); en 1 no recorta nada */
 .escena-ventana {
-  --cerrado: calc(1 - var(--p)); /* 1 = cerrado, 0 = abierto */
+  --cerrado: calc(1 - var(--abierto)); /* 1 = cerrado, 0 = abierto */
   clip-path: inset(
     calc(var(--cerrado) * 42%) calc(var(--cerrado) * 42%)
     round calc(var(--cerrado) * 500px)
@@ -52,29 +37,22 @@
 
 /* Lo de adentro también crece: de 70% a su tamaño normal */
 .escena-ventana > * {
-  transform: scale(calc(0.7 + 0.3 * var(--p)));
+  transform: scale(calc(0.7 + 0.3 * var(--abierto)));
 }
 
 /* Aparece desenfocado desde abajo. --q empieza a subir cuando la ventana
-   va por la mitad (--p = 0.5) y llega a 1 cuando está abierta */
+   va por la mitad (--abierto = 0.5) y llega a 1 cuando está abierta */
 .escena-aparece {
-  --q: clamp(0, calc((var(--p) - 0.5) * 2), 1);
+  --q: clamp(0, calc((var(--abierto) - 0.5) * 2), 1);
   opacity: var(--q);
   filter: blur(calc((1 - var(--q)) * 10px));
   transform: translateY(calc((1 - var(--q)) * 40px));
 }
 
-/* Si la persona desactivó las animaciones: sin pausa ni efectos */
+/* Si la persona desactivó las animaciones: siempre abierta */
 @media (prefers-reduced-motion: reduce) {
-  .escena::after {
-    display: none;
-  }
-
-  .escena-fija {
-    position: static;
-  }
-
-  .escena-ancla {
-    top: 0;
+  .escena {
+    --abierto: 1;
+    transition: none;
   }
 }

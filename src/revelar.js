@@ -11,7 +11,11 @@ export function activarRevelado() {
     (entradas) => {
       for (const entrada of entradas) {
         if (entrada.isIntersecting) {
-          entrada.target.classList.add('revelado');
+          // Se marca con un atributo propio y no con una clase: si React cambia
+          // las clases del elemento (por ejemplo al abrir "Leer más"), borraría
+          // una clase puesta aquí y el bloque volvería a quedar invisible.
+          // Este atributo React no lo toca nunca.
+          entrada.target.setAttribute('data-revelado', '');
           observador.unobserve(entrada.target);
         }
       }

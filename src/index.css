@@ -103,7 +103,7 @@ button {
   transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
 }
 
-.revelado-activo [data-reveal].revelado {
+.revelado-activo [data-reveal][data-revelado] {
   opacity: 1;
   transform: none;
 }
