@@ -1,16 +1,27 @@
-# React + Vite
+Portafolio — David Pérez Pantoja
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Portafolio web desarrollado para David Pérez Pantoja, integrante de la OSNC Colombia, como espacio para presentar su perfil profesional, proyectos, habilidades y medios de contacto.
 
-Currently, two official plugins are available:
+El proyecto fue desarrollado utilizando React + Vite, con un diseño responsive y enfocado en ofrecer una experiencia clara y moderna.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+🛠️ Tecnologías
 
-## React Compiler
+React
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Vite
 
-## Expanding the ESLint configuration
+JavaScript
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+HTML5
+
+CSS3
+
+ESLint
+
+🌐 Sitio web
+
+davidperezpantoja.com
+
+👨‍💻 Desarrollo
+
+Proyecto diseñado y desarrollado por Guill-dev como portafolio web personalizado para David Pérez Pantoja.
