@@ -1,0 +1,27 @@
+/* Letras que se juntan al hacer scroll (ver TextoScroll.jsx).
+   Las dos variables que mueven todo:
+     --p  avance del scroll: 0 = letras separadas, 1 = frase armada (lo pone el JS)
+     --d  distancia de cada letra al centro de la frase (también la pone el JS)
+   Sin JavaScript --p vale 1, así que el título siempre se ve normal. */
+.texto-scroll {
+  --p: 1;
+  --separacion: clamp(16px, 4vw, 50px); /* cuánto se aleja cada letra al inicio */
+  --giro: 50deg;                        /* cuánto gira cada letra al inicio */
+}
+
+/* Cada palabra va en un bloque para que no se parta entre dos líneas */
+.texto-scroll-palabra {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+/* Mientras --p sube de 0 a 1, (1 - --p) baja de 1 a 0:
+   la letra vuelve a su sitio, deja de girar y se vuelve opaca */
+.texto-scroll-letra {
+  display: inline-block;
+  transform:
+    perspective(500px)
+    translateX(calc(var(--d) * var(--separacion) * (1 - var(--p))))
+    rotateX(calc(var(--d) * var(--giro) * (1 - var(--p))));
+  opacity: calc(0.1 + 0.9 * var(--p));
+}

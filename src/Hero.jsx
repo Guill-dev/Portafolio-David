@@ -44,7 +44,7 @@ function Hero() {
         </div>
 
         <div className="hero-acciones hero-anim">
-          <a className="hero-video-cta" href="#presentaciones">
+          <a className="hero-video-cta boton-hover" href="#presentaciones">
             <span className="hero-video-cta-icono" aria-hidden="true">▶</span>
             Ver presentaciones
           </a>

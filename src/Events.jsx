@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Movement from './Movement';
 import ImageCarousel from './ImageCarousel';
+import BotonHover from './BotonHover';
 import { EVENT_POSTERS } from './eventPosters';
 
 function Events() {
@@ -10,7 +11,7 @@ function Events() {
   return (
     <Movement numeral="Movimiento IV" title="Eventos" id="eventos" className="movement-eventos">
       {/* "tarjeta" le da el fondo y el borde, igual que en Historia */}
-      <div className={`events-tarjeta tarjeta ${abierto ? 'abierta' : ''}`}>
+      <div className={`events-tarjeta tarjeta ${abierto ? 'abierta' : ''}`} data-reveal>
         <p className="events-intro">¡Entérate de todo! Echa un vistazo a mis nuevos eventos:</p>
         <p>Hay encuentros que simplemente suceden, y hay otros que se convierten en momentos que recordamos.</p>
 
@@ -25,7 +26,7 @@ function Events() {
 
         <div className="events-acciones">
           {/* Usa el mismo estilo que el botón de Historia (clase btn-leer-mas) */}
-          <button
+          <BotonHover
             type="button"
             className="btn-leer-mas events-leer-mas"
             aria-expanded={abierto}
@@ -33,8 +34,10 @@ function Events() {
           >
             <span>{abierto ? 'Ver menos' : 'Leer más'}</span>
             <span className="btn-leer-mas-icono" aria-hidden="true">▾</span>
-          </button>
-          <a className="events-enlace" href="#contacto">Sigamos en contacto</a>
+          </BotonHover>
+          <BotonHover como="a" className="events-enlace" href="#contacto" flecha="→">
+            Sigamos en contacto
+          </BotonHover>
         </div>
       </div>
       <ImageCarousel items={EVENT_POSTERS} />

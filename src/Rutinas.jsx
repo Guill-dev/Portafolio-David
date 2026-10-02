@@ -48,7 +48,7 @@ function RutinaCard({ rutina }) {
       <RutinaVideo video={rutina.videoId} titulo={rutina.titulo} />
 
       {rutina.pdf && (
-        <a className="rutina-download" href={rutina.pdf} download>
+        <a className="rutina-download boton-hover" href={rutina.pdf} download>
           Descargar rutina (PDF)
         </a>
       )}
@@ -63,7 +63,7 @@ function Rutinas() {
       <Header />
 
       <section className="rutinas-hero">
-        <a className="rutinas-volver" href="/">
+        <a className="rutinas-volver boton-hover" href="/">
           ← Volver al inicio
         </a>
         <span className="rutinas-numeral">Rutinas de práctica</span>

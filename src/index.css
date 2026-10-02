@@ -74,6 +74,22 @@ button {
   font: inherit;
 }
 
+/* Corta lo que se salga por los lados (como las letras de TextoScroll
+   cuando empiezan separadas) para que nunca aparezca scroll horizontal */
+#root {
+  overflow-x: clip;
+}
+
+/* Texto invisible en pantalla que sí leen los lectores para ciegos */
+.solo-lectores {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
 :focus-visible {
   outline: 2px solid var(--brass);
   outline-offset: 3px;
@@ -108,4 +124,49 @@ button {
   .tarjeta {
     padding: 44px 48px;
   }
+}
+
+/* =====================================================================
+   BOTONES CON RELLENO DORADO
+   Al pasar el mouse, un círculo dorado crece desde un punto hasta llenar
+   el botón (inspirado en "Interactive Hover Button" de 21st.dev).
+   Uso: agrega la clase "boton-hover" a cualquier botón o enlace.
+   Cada botón lo ajusta con dos variables en su propio CSS:
+     --origen  dónde nace el círculo (x y). Por defecto, a 22px de la izquierda
+     --punto   radio del punto en reposo. 0px = no se ve hasta pasar el mouse
+   ===================================================================== */
+.boton-hover {
+  --origen: 22px 50%;
+  --punto: 4px;
+  --lleno: 0; /* 0 = en reposo, 1 = lleno (lo cambian las reglas de abajo) */
+  position: relative;
+  isolation: isolate; /* el relleno queda detrás del texto, pero dentro del botón */
+  overflow: hidden;
+}
+
+.boton-hover::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--brass);
+  clip-path: circle(calc(var(--punto) + var(--lleno) * 150%) at var(--origen));
+  transition: clip-path 0.5s var(--ease);
+}
+
+/* Solo con mouse: en celular el :hover se queda "pegado" después de tocar */
+@media (hover: hover) {
+  .boton-hover:hover {
+    --lleno: 1;
+    color: #000;
+    border-color: var(--brass);
+  }
+}
+
+/* Con teclado (tecla Tab) o mientras se toca en el celular también se llena */
+.boton-hover:focus-visible,
+.boton-hover:active {
+  --lleno: 1;
+  color: #000;
+  border-color: var(--brass);
 }

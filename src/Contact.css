@@ -37,7 +37,7 @@
   letter-spacing: -0.05em;
 }
 
-.contact h2 span {
+.contact h2 .contact-resalte {
   display: block;
   font-family: var(--serif);
   font-style: italic;
@@ -71,12 +71,9 @@
   font-weight: 500;
   color: var(--ivory);
   transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-}
-
-.social-row a:hover {
-  background: var(--ivory);
-  border-color: var(--ivory);
-  color: #000;
+  /* El dorado nace del ícono de la red social (clase boton-hover, ver index.css) */
+  --origen: 29px 50%;
+  --punto: 0px;
 }
 
 .social-row svg {

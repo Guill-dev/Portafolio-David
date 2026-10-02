@@ -34,16 +34,6 @@
   transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
-.events-enlace::after {
-  content: '→';
-}
-
-.events-enlace:hover {
-  background: var(--ivory);
-  border-color: var(--ivory);
-  color: #000;
-}
-
 /* Párrafos que se ocultan en celular y tablet */
 .events-mas {
   margin-top: 16px;
@@ -192,12 +182,9 @@
   align-items: center;
   justify-content: center;
   transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-}
-
-.carousel-arrow:hover {
-  background: var(--ivory);
-  border-color: var(--ivory);
-  color: #000;
+  /* Relleno dorado que nace del centro (clase boton-hover, ver index.css) */
+  --origen: 50% 50%;
+  --punto: 0px;
 }
 
 /* Barra segmentada: cada tramo es un afiche */

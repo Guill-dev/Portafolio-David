@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Movement from './Movement';
 import Highlight from './Highlight';
+import BotonHover from './BotonHover';
 import fotoDavid from './assets/Imagenes/perfil/DavidPortada-retrato.jpg';
 import './Highlight.css';
 import './Historia.css';
@@ -11,12 +12,12 @@ function Historia() {
   return (
     <Movement numeral="Movimiento I" title="Historia" id="historia" className="movement-historia">
       <div className="historia-grid">
-        <figure className="historia-retrato">
+        <figure className="historia-retrato" data-reveal>
           <img src={fotoDavid} alt="David Pérez Pantoja con su trombón bajo" loading="lazy" />
           <figcaption>Puerres, Nariño · 1999</figcaption>
         </figure>
 
-        <div className="historia-texto tarjeta">
+        <div className="historia-texto tarjeta" data-reveal>
           {/* Párrafo 1: Se muestra siempre */}
           <p className="historia-lead">
             Stiven David Pérez Pantoja, trombón bajo, es un destacado músico nariñense, oriundo de{' '}
@@ -102,15 +103,15 @@ function Historia() {
             </div>
           )}
 
-          {/* Botón con clase CSS */}
-          <button
+          {/* Botón con el punto dorado que se llena (ver BotonHover.jsx) */}
+          <BotonHover
             onClick={() => setIsExpanded(!isExpanded)}
             className="btn-leer-mas"
             aria-expanded={isExpanded}
           >
             <span>{isExpanded ? 'Ver menos' : 'Seguir leyendo'}</span>
             <span className="btn-leer-mas-icono" aria-hidden="true">▾</span>
-          </button>
+          </BotonHover>
         </div>
       </div>
     </Movement>

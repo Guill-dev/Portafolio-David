@@ -81,6 +81,7 @@ function ImageCarousel({ items, autoplayMs = 5000 }) {
       <div
         ref={frameRef}
         className="carousel-frame"
+        data-reveal
         onTouchStart={manejarInicioToque}
         onTouchEnd={manejarFinToque}
       >
@@ -99,23 +100,23 @@ function ImageCarousel({ items, autoplayMs = 5000 }) {
         </div>
       </div>
 
-      <div ref={infoRef} className="carousel-info">
+      <div ref={infoRef} className="carousel-info" data-reveal>
         <p className="carousel-caption">{items[indice]?.caption}</p>
 
         <div className="carousel-controles">
           <span className="carousel-contador">
             {numero(indice + 1)} <span>/ {numero(items.length)}</span>
           </span>
-          <button className="carousel-arrow" aria-label="Anterior" onClick={() => irA(indice - 1)}>
+          <button className="carousel-arrow boton-hover" aria-label="Anterior" onClick={() => irA(indice - 1)}>
             ←
           </button>
-          <button className="carousel-arrow" aria-label="Siguiente" onClick={() => irA(indice + 1)}>
+          <button className="carousel-arrow boton-hover" aria-label="Siguiente" onClick={() => irA(indice + 1)}>
             →
           </button>
         </div>
       </div>
 
-      <div ref={dotsRef} className="carousel-dots">
+      <div ref={dotsRef} className="carousel-dots" data-reveal>
         {items.map((_, i) => (
           <button
             key={i}

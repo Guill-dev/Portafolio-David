@@ -154,10 +154,12 @@
   letter-spacing: -0.01em;
   white-space: nowrap;
   transition: background 0.3s ease, transform 0.3s var(--ease);
+  /* El dorado nace del círculo negro del ▶ (clase boton-hover, ver index.css) */
+  --origen: 23px 50%;
+  --punto: 0px;
 }
 
 .hero-video-cta:hover {
-  background: var(--brass);
   transform: translateY(-2px);
 }
 
@@ -199,6 +201,9 @@
   color: var(--ivory);
   white-space: pre-line;
   transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  /* El dorado nace de la flecha ↗ de la derecha (clase boton-hover) */
+  --origen: calc(100% - 27px) 50%;
+  --punto: 0px;
 }
 
 .shires-row a::after {
@@ -208,67 +213,121 @@
   transition: transform 0.3s var(--ease);
 }
 
-.shires-row a:hover {
-  background: var(--ivory);
-  border-color: var(--ivory);
-  color: #000;
-}
-
 .shires-row a:hover::after {
   transform: translate(2px, -2px);
 }
 
-/* ---------- Aviso "Desplázate" ---------- */
+/* ---------- Botón "Desplázate" ----------
+   Píldora negra con una luz dorada que da vueltas por dentro, una trama
+   de puntitos donde está la luz y el borde que brilla por donde pasa.
+   Todo lo mueve una sola variable: --cue-angulo. */
+
+/* @property registra la variable para que el navegador pueda animarla.
+   Una variable normal no se anima: cambia de golpe de un valor a otro. */
+@property --cue-angulo {
+  syntax: '<angle>';
+  inherits: true;
+  initial-value: 45deg;
+}
+
+/* Tamaño de la luz (crece al pasar el mouse) */
+@property --cue-luz {
+  syntax: '<length>';
+  inherits: true;
+  initial-value: 70px;
+}
+
 .scroll-cue {
+  /* Centro de la luz: recorre el borde del botón según --cue-angulo
+     (0deg = arriba, 90deg = derecha, 180deg = abajo, 270deg = izquierda) */
+  --x: calc(50% + sin(var(--cue-angulo)) * 50%);
+  --y: calc(50% - cos(var(--cue-angulo)) * 50%);
   grid-area: cue;
   justify-self: center;
+  position: relative;
+  isolation: isolate; /* la luz queda detrás del texto, pero dentro del botón */
+  overflow: hidden;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  font-size: 0.68rem;
-  font-weight: 500;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--muted);
-  animation: scroll-cue-flotar 2.2s ease-in-out infinite, scroll-cue-brillo 2.2s ease-in-out infinite;
+  gap: 10px;
+  padding: 15px 30px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  /* Dos fondos: negro por dentro y, en el borde, un brillo dorado que
+     apunta siempre hacia donde está la luz */
+  background:
+    linear-gradient(#080706, #080706) padding-box,
+    conic-gradient(
+      from calc(var(--cue-angulo) - 80deg),
+      rgba(255, 255, 255, 0.1),
+      var(--brass) 80deg,
+      rgba(255, 255, 255, 0.1) 160deg
+    ) border-box;
+  color: var(--ivory);
+  font-family: var(--display);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  animation: cue-girar 4s linear infinite;
+  transition: transform 0.4s var(--ease), --cue-luz 0.6s var(--ease);
+}
+
+.scroll-cue::before,
+.scroll-cue::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* La luz dorada */
+.scroll-cue::before {
+  background: radial-gradient(
+    circle var(--cue-luz) at var(--x) var(--y),
+    rgba(201, 162, 76, 0.55),
+    rgba(143, 117, 56, 0.22) 55%,
+    transparent
+  );
+}
+
+/* La trama de puntitos: una cuadrícula de puntos que solo se ve donde
+   está la luz gracias a la máscara (mask-image) */
+.scroll-cue::after {
+  background-image: radial-gradient(rgba(245, 222, 170, 0.6) 0.7px, transparent 1.2px);
+  background-size: 5px 5px;
+  -webkit-mask-image: radial-gradient(circle var(--cue-luz) at var(--x) var(--y), #000 10%, transparent 80%);
+  mask-image: radial-gradient(circle var(--cue-luz) at var(--x) var(--y), #000 10%, transparent 80%);
+}
+
+/* Al pasar el mouse (o con el teclado) la luz crece y el botón se levanta */
+.scroll-cue:hover,
+.scroll-cue:focus-visible {
+  --cue-luz: 150px;
+  transform: translateY(-2px) scale(1.03);
 }
 
 .scroll-cue-icono {
   display: inline-block;
-  font-size: 0.9rem;
+  color: var(--brass);
   animation: scroll-cue-rebote 2.2s ease-in-out infinite;
 }
 
-@keyframes scroll-cue-flotar {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(4px);
-  }
-}
-
-@keyframes scroll-cue-brillo {
-  0%,
-  100% {
-    color: var(--muted);
-    letter-spacing: 0.16em;
-  }
-  50% {
-    color: var(--brass);
-    letter-spacing: 0.22em;
+/* Una vuelta completa de la luz: de 45deg a 405deg (45 + 360) */
+@keyframes cue-girar {
+  to {
+    --cue-angulo: 405deg;
   }
 }
 
 @keyframes scroll-cue-rebote {
   0%,
   100% {
-    transform: translateY(0);
+    transform: translateY(-1px);
     opacity: 0.7;
   }
   50% {
-    transform: translateY(8px);
+    transform: translateY(3px);
     opacity: 1;
   }
 }
@@ -298,8 +357,7 @@
 .pagina-lista .scroll-cue {
   animation:
     hero-aparece 0.8s ease 0.6s forwards,
-    scroll-cue-flotar 2.2s ease-in-out infinite,
-    scroll-cue-brillo 2.2s ease-in-out infinite;
+    cue-girar 4s linear infinite;
 }
 
 @keyframes hero-entra {

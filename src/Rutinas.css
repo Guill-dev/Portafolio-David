@@ -16,12 +16,9 @@
   font-size: 0.85rem;
   font-weight: 500;
   transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-}
-
-.rutinas-volver:hover {
-  background: var(--ivory);
-  border-color: var(--ivory);
-  color: #000;
+  /* El dorado nace de la flecha ← (clase boton-hover, ver index.css) */
+  --origen: 24px 50%;
+  --punto: 0px;
 }
 
 .rutinas-numeral {
@@ -190,6 +187,9 @@
   font-size: 0.88rem;
   font-weight: 500;
   transition: background 0.3s ease, transform 0.3s var(--ease);
+  /* El dorado nace de la flecha ↓ de la derecha (clase boton-hover) */
+  --origen: calc(100% - 27px) 50%;
+  --punto: 0px;
 }
 
 .rutina-download::after {
@@ -197,7 +197,6 @@
 }
 
 .rutina-download:hover {
-  background: var(--brass);
   transform: translateY(-2px);
 }
 

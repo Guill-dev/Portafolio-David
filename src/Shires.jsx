@@ -1,7 +1,7 @@
 function Shires() {
   return (
     <div className="shires-row">
-      <a 
+      <a className="boton-hover"
         href="https://www.seshires.com/artiste/mvlhx95b2al4m3obepyfzq59yhj0yn" 
         target="_blank" 
         rel="noopener noreferrer"
@@ -9,7 +9,7 @@ function Shires() {
         MIRA A ESTE ARTISTA EN S.E. SHIRES
       </a>
 
-      <a 
+      <a className="boton-hover"
         href="https://sinfonica.com.co/wp-content/uploads/2026/09/StivenDavidPerezPantoja.jpg" 
         target="_blank" 
         rel="noopener noreferrer"

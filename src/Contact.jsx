@@ -1,18 +1,22 @@
 import { SOCIALS } from './socialLinks';
+import TextoScroll from './TextoScroll';
 
 function Contact() {
   return (
     <section className="contact" id="contacto">
       <div className="contact-inner">
-        <span className="contact-label">Contacto</span>
-        <h2 data-reveal>
-          Hablemos <span>de música.</span>
+        <span className="contact-label" data-reveal>Contacto</span>
+        <h2>
+          <TextoScroll texto="Hablemos" />{' '}
+          <span className="contact-resalte">
+            <TextoScroll texto="de música." />
+          </span>
         </h2>
-        <p>Para contrataciones, presentaciones o colaboraciones, escríbeme por cualquiera de estos medios.</p>
+        <p data-reveal>Para contrataciones, presentaciones o colaboraciones, escríbeme por cualquiera de estos medios.</p>
 
-        <div className="social-row">
+        <div className="social-row" data-reveal>
           {SOCIALS.map((s) => (
-            <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer">
+            <a key={s.label} className="boton-hover" href={s.href} target="_blank" rel="noopener noreferrer">
               <svg viewBox="0 0 24 24">
                 <path d={s.path} />
               </svg>

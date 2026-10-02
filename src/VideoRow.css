@@ -1,60 +1,72 @@
-.video-frame {
+/* Mientras se abre, el video completo (con su título, flechas y barra)
+   debe caber en la pantalla: el ancho se limita según el alto disponible.
+   190px = espacio para el título del video, las flechas y la barra.
+   Nunca queda más angosto que la mitad del espacio (50%). */
+.video-escena .escena-fija {
+  width: min(100%, max(50%, calc((100svh - var(--header-h) - 190px) * 16 / 9)));
+  margin-inline: auto;
+  container-type: inline-size; /* así 100cqw = el ancho del video del frente */
+}
+
+/* =====================================================================
+   CARRUSEL 3D: los videos van pegados alrededor de una rueda que gira.
+   Variables que pone VideoRow.jsx:
+     --caras  cuántos videos hay
+     --giro   qué video está al frente (con decimales mientras se arrastra)
+     --i      el número de cada video
+   ===================================================================== */
+.video-escenario {
   position: relative;
-  width: 100%;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 16 / 9;  /* el video del frente mide lo mismo que antes */
+  perspective: 250cqw;   /* distancia de la "cámara": más pequeña = más 3D */
+  touch-action: pan-y;   /* el dedo de arriba abajo mueve la página; de lado, la rueda */
+  cursor: grab;
+  user-select: none;
+}
+
+.video-escenario.arrastrando {
+  cursor: grabbing;
+}
+
+.video-cilindro {
+  --hueco: 24px;                         /* espacio entre un video y el siguiente */
+  --angulo: calc(360deg / var(--caras)); /* cuánto gira la rueda por cada video */
+  /* Distancia del centro de la rueda a cada video, calculada para que
+     queden uno al lado del otro (es la fórmula de un polígono regular) */
+  --radio: calc((100cqw + var(--hueco)) / (2 * tan(var(--angulo) / 2)));
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d; /* los videos de adentro conservan su 3D */
+  /* La rueda se aleja de la cámara (así el video del frente queda de su
+     tamaño normal) y gira según --giro */
+  transform: translateZ(calc(var(--radio) * -1)) rotateY(calc(var(--giro) * var(--angulo) * -1));
+  transition: transform 0.8s var(--ease);
+}
+
+/* Mientras se arrastra, la rueda sigue al dedo sin retraso */
+.video-escenario.arrastrando .video-cilindro {
+  transition: none;
+}
+
+/* Cada video: se gira a su lugar en la rueda y se empuja hacia afuera */
+.video-cara {
+  position: absolute;
+  inset: 0;
   border-radius: var(--radius);
   overflow: hidden;
   background: var(--surface);
-  touch-action: pan-y;
+  transform: rotateY(calc(var(--i) * var(--angulo))) translateZ(var(--radio));
+  backface-visibility: hidden; /* los de atrás de la rueda no se ven al revés */
+  transition: opacity 0.6s ease;
 }
 
-.video-layer {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
+/* Los videos de los lados: más apagados. Aparecen cuando el del frente
+   ya casi terminó de abrirse con el scroll (--p de EscenaScroll) */
+.video-cara:not(.activa) {
+  opacity: calc(0.4 * clamp(0, calc((var(--p) - 0.6) * 2.5), 1));
 }
 
-.video-layer.saliente {
-  z-index: 2;
-}
-
-@keyframes videoSaleIzquierda {
-  from { transform: translateX(0); opacity: 1; }
-  to { transform: translateX(-100%); opacity: 0.1; }
-}
-
-@keyframes videoSaleDerecha {
-  from { transform: translateX(0); opacity: 1; }
-  to { transform: translateX(100%); opacity: 0.1; }
-}
-
-@keyframes videoEntraDerecha {
-  from { transform: translateX(100%); opacity: 0.3; }
-  to { transform: translateX(0); opacity: 1; }
-}
-
-@keyframes videoEntraIzquierda {
-  from { transform: translateX(-100%); opacity: 0.3; }
-  to { transform: translateX(0); opacity: 1; }
-}
-
-.video-layer.saliente.siguiente {
-  animation: videoSaleIzquierda 0.5s ease forwards;
-}
-
-.video-layer.saliente.anterior {
-  animation: videoSaleDerecha 0.5s ease forwards;
-}
-
-.video-layer.entrante.siguiente {
-  animation: videoEntraDerecha 0.5s ease forwards;
-}
-
-.video-layer.entrante.anterior {
-  animation: videoEntraIzquierda 0.5s ease forwards;
-}
-
-.video-frame iframe {
+.video-cara iframe {
   width: 100%;
   height: 100%;
   border: none;
@@ -164,12 +176,9 @@
   align-items: center;
   justify-content: center;
   transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-}
-
-.video-nav-arrow:hover {
-  background: var(--ivory);
-  border-color: var(--ivory);
-  color: #000;
+  /* Relleno dorado que nace del centro (clase boton-hover, ver index.css) */
+  --origen: 50% 50%;
+  --punto: 0px;
 }
 
 /* Barra segmentada: cada tramo es una presentación */
@@ -230,7 +239,7 @@
 }
 
 @media (min-width: 1024px) {
-  .video-frame {
+  .video-cara {
     border-radius: 28px;
   }
 }

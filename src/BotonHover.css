@@ -1,0 +1,41 @@
+/* Cambio de texto de BotonHover.jsx.
+   El relleno dorado y la variable --lleno (0 en reposo, 1 con el mouse
+   encima) están en index.css, en la clase .boton-hover. */
+
+/* Espacio a la izquierda para el punto dorado.
+   Dos clases para ganarle al padding propio de cada botón */
+.boton-hover.boton-cambio {
+  padding-left: 40px;
+}
+
+/* Texto normal: cuando --lleno pasa a 1 se corre a la derecha y se desvanece */
+.boton-cambio-texto {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  transform: translateX(calc(var(--lleno) * 40px));
+  opacity: calc(1 - var(--lleno));
+  transition: transform 0.45s var(--ease), opacity 0.3s ease;
+}
+
+/* Copia en negro: espera escondida a la derecha y entra cuando --lleno es 1 */
+.boton-cambio-copia {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: #000;
+  transform: translateX(calc((1 - var(--lleno)) * 40px));
+  opacity: var(--lleno);
+  transition: transform 0.45s var(--ease), opacity 0.3s ease;
+}
+
+/* Si la persona desactivó las animaciones: solo cambia, sin deslizarse */
+@media (prefers-reduced-motion: reduce) {
+  .boton-cambio-texto,
+  .boton-cambio-copia {
+    transform: none;
+  }
+}
