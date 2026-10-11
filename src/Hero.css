@@ -18,36 +18,23 @@
   position: absolute;
   inset: 0;
   overflow: hidden;
-  container-type: size;
 }
 
+/* El video cubre toda la pantalla (object-fit: cover) y se recorta lo que sobre.
+   👉 object-position elige qué parte del video se ve cuando hay que recortar:
+      horizontal y vertical (50% 50% = el centro).
+      En el video de David, él está a la derecha del centro (~62%) y su cara
+      en el tercio de arriba. Eso importa sobre todo en el celular vertical,
+      donde solo se ve una franja de 1/4 del ancho del video.
+      Súbele al primer número para mostrar más la derecha; bájale al
+      segundo para mostrar más la parte de arriba. */
 .hero-video video {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-}
-
-/* El iframe de YouTube se agranda para cubrir la pantalla como un
-   "object-fit: cover" y esconder los controles del reproductor */
-
-   /*posicionamiento del video en la pantalla principal*/
-.hero-video-youtube {
-  position: absolute;
-  top: 60%;
-  left: 40%;
-  width: max(100cqw, 177.78cqh);
-  height: max(100cqh, 56.25cqw);
-  transform: translate(-50%, -50%) scale(1.2);
-  pointer-events: none;
-}
-
-.hero-video-youtube iframe {
-  display: block;
-  width: 100%;
-  height: 100%;
-  border: 0;
+  object-position: 66% 30%;
 }
 
 /* Oscurece el video para que las letras se lean bien */
