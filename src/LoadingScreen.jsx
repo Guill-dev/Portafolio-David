@@ -17,12 +17,12 @@ function LoadingScreen({ onFinish }) {
   const [terminado, setTerminado] = useState(false);
 
   // Si onFinish cambiara entre renders, el efecto no debe reiniciarse:
-  // eso volvería a bloquear el scroll otros 4 segundos.
+  // eso volvería a bloquear el scroll otra vez.
   const avisarFin = useEffectEvent(() => onFinish?.());
 
   useEffect(() => {
-    const prefiereReducido = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const duracion = prefiereReducido ? 2000 : 2000;
+    // Tiempo que se ve la pantalla de carga, en milisegundos (2000 = 2 s)
+    const duracion = 2000;
 
     document.body.style.overflow = 'hidden';
 
