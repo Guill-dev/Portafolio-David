@@ -3,7 +3,7 @@ import { AWARDS } from './reconocimientos';
 
 function Awards() {
   return (
-    <Movement numeral="Movimiento III" title="Premios y Reconocimientos" id="premios">
+    <Movement numeral="Movimiento IV" title="Premios y Reconocimientos" id="premios">
       <ol className="awards-list">
         {AWARDS.map((award, i) => (
           <li key={i} className="award-row" data-reveal>

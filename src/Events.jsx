@@ -9,7 +9,7 @@ function Events() {
   const [abierto, setAbierto] = useState(false);
 
   return (
-    <Movement numeral="Movimiento IV" title="Eventos" id="eventos" className="movement-eventos">
+    <Movement numeral="Movimiento III" title="Eventos" id="eventos" className="movement-eventos">
       {/* "tarjeta" le da el fondo y el borde, igual que en Historia */}
       <div className={`events-tarjeta tarjeta ${abierto ? 'abierta' : ''}`} data-reveal>
         <p className="events-intro">¡Entérate de todo! Echa un vistazo a mis nuevos eventos:</p>

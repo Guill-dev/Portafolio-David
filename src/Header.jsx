@@ -5,8 +5,8 @@ import { SOCIALS } from './socialLinks';
 const NAV_ITEMS = [
   { id: 'historia', label: 'Historia', href: '/#historia' },
   { id: 'presentaciones', label: 'Presentaciones', href: '/#presentaciones' },
-  { id: 'premios', label: 'Reconocimientos', href: '/#premios' },
   { id: 'eventos', label: 'Eventos', href: '/#eventos' },
+  { id: 'premios', label: 'Reconocimientos', href: '/#premios' },
   { id: 'contacto', label: 'Contacto', href: '/#contacto' }
 
 ];
