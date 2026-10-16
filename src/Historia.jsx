@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Movement from './Movement';
 import Highlight from './Highlight';
 import BotonHover from './BotonHover';
-import fotoDavid from './assets/Imagenes/perfil/DavidPortada-retrato.jpg';
+import fotoDavid from './assets/Imagenes/perfil/DavidPortada-retrato.webp';
 import './Highlight.css';
 import './Historia.css';
 
